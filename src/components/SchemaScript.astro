@@ -15,11 +15,13 @@ interface Props {
 
 const { pageUrl, breadcrumb = [], faq = [], ogImage } = Astro.props as Props;
 
+const resolvedUrl = (pageUrl ?? 'https://the-jungle-growshop-dortmund.github.io/').trim();
+
 const localBusiness = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   name: site.brand,
-  url: pageUrl ?? 'https://the-jungle-growshop-dortmund.github.io/',
+  url: resolvedUrl,
   telephone: site.phone_display,
   image: ogImage ?? '/og-cover.png',
   address: {
@@ -48,7 +50,7 @@ const crumbs = breadcrumb.length
           '@type': 'ListItem',
           position: index + 1,
           name: crumbItem.name,
-          item: crumbItem.url
+          item: crumbItem.url.trim()
         }))
       }
     ]
@@ -72,7 +74,7 @@ const faqSchema = faq.length
   : [];
 
 const schemas = [localBusiness, ...crumbs, ...faqSchema];
-const json = JSON.stringify(schemas);
+const json = JSON.stringify(schemas, null, 2);
 ---
 
 <script type="application/ld+json" set:html={json}></script>
