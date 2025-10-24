@@ -1,0 +1,10 @@
+{
+  "brand": "The Jungle Growshop Dortmund",
+  "address": "Eberstr. 18, 44145 Dortmund",
+  "phone_display": "0231 95094526",
+  "phone_link": "tel:+4923195094526",
+  "email": "kontakt@growthejungle.de",
+  "hours": "Mo–Sa 10–20 Uhr",
+  "payments": ["Bar", "Girocard", "Visa", "Mastercard", "Apple Pay", "Google Pay"],
+  "transport": ["Parkplätze in der Nähe", "VRR/DSW21 fußläufig"]
+}

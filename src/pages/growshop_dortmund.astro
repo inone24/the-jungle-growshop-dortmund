@@ -1,0 +1,138 @@
+---
+import meta from '../../content/seo/growshop.json';
+import PageLayout from '../layouts/PageLayout.astro';
+
+const faq = [
+  {
+    question: 'Welche LED passt zu 100×100?',
+    answer: 'Meist 250–350 W (High-End Bar), Dimmer & Controller einplanen.'
+  },
+  {
+    question: 'Welcher AKF & EC-Lüfter?',
+    answer: 'Volumen × ACH + Reserve für Filter/Schläuche – wir rechnen es im Laden.'
+  }
+];
+---
+
+<PageLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  breadcrumb={[
+    { name: 'Start', url: 'https://the-jungle-growshop-dortmund.github.io/' },
+    { name: 'Growshop Dortmund', url: meta.canonical }
+  ]}
+  faq={faq}
+>
+  <section class="mb-8">
+    <h1 class="font-display text-3xl text-text-high">Growshop Dortmund – ehrlich beraten, sofort verfügbar</h1>
+    <p class="mt-4 max-w-3xl text-text-dim">
+      Setups, die greifen: Zelte &amp; LED, EC-Lüfter/AKF, Dünger &amp; Substrate – plus Smart-Steuerung.
+    </p>
+    <div class="mt-6 flex gap-3">
+      <a class="rounded-full bg-accent-moss/10 px-5 py-2 text-accent-primary" href="/kontakt/"
+        >Beratung &amp; Kauf</a
+      >
+      <a class="rounded-full border border-accent-moss/40 px-5 py-2 text-accent-primary" href="/standort/"
+        >Route starten</a
+      >
+    </div>
+  </section>
+
+  <section class="grid gap-6 md:grid-cols-2">
+    <article class="glass-panel rounded-2xl p-6">
+      <h2 class="font-display text-2xl text-accent-primary">AC Infinity · UIS</h2>
+      <p class="mt-2 text-sm text-text-dim">
+        Controller 69 Pro/Pro+, App-Charts &amp; VPD-Programme. LEDs mit Sunrise/Sunset – leiser &amp;
+        planbarer Betrieb.
+      </p>
+    </article>
+    <article class="glass-panel rounded-2xl p-6">
+      <h2 class="font-display text-2xl text-accent-primary">VIVOSUN · GrowHub</h2>
+      <p class="mt-2 text-sm text-text-dim">Automationen, Diary/Rezepte &amp; Daisy-Chain – zentral orchestriert.</p>
+    </article>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="font-display text-2xl text-accent-primary">In 6 Schritten zum Setup</h2>
+    <ol class="mt-4 grid gap-4 md:grid-cols-3">
+      <li class="glass-panel rounded-xl p-4">1 · Ziel &amp; Fläche</li>
+      <li class="glass-panel rounded-xl p-4">2 · Dimensionierung</li>
+      <li class="glass-panel rounded-xl p-4">3 · Steuerung</li>
+      <li class="glass-panel rounded-xl p-4">4 · App-Pairing</li>
+      <li class="glass-panel rounded-xl p-4">5 · Feintuning</li>
+      <li class="glass-panel rounded-xl p-4">6 · Daten nutzen</li>
+    </ol>
+  </section>
+
+  <section class="mt-12 grid gap-4 md:grid-cols-4">
+    <article class="glass-panel rounded-xl p-4">
+      <h3 class="font-semibold">Quick-Check</h3>
+      <p class="mt-2 text-sm text-text-dim">Maße/Fotos mitbringen – wir rechnen Watt &amp; Luftwechsel.</p>
+    </article>
+    <article class="glass-panel rounded-xl p-4">
+      <h3 class="font-semibold">Komplett-Set</h3>
+      <p class="mt-2 text-sm text-text-dim">Zelt, LED, AKF/EC, Controller – sauber kombiniert.</p>
+    </article>
+    <article class="glass-panel rounded-xl p-4">
+      <h3 class="font-semibold">Troubleshooting</h3>
+      <p class="mt-2 text-sm text-text-dim">Geruch, Hitze, Feuchte, pH/EC – wir finden die Ursache.</p>
+    </article>
+    <article class="glass-panel rounded-xl p-4">
+      <h3 class="font-semibold">Ersatz &amp; Zubehör</h3>
+      <p class="mt-2 text-sm text-text-dim">Clamps, Dämpfer, Netze, Adapter, Kabel.</p>
+    </article>
+  </section>
+
+  <section class="mt-12 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+    <div class="glass-panel rounded-2xl p-6">
+      <h2 class="font-display text-2xl text-accent-primary">So erreichst du uns</h2>
+      <p class="mt-2 text-sm text-text-dim">
+        Eberstr. 18, 44145 Dortmund · Mo–Sa 10–20 Uhr · Tel. 0231 95094526
+      </p>
+      <img
+        class="mt-4 rounded-xl border border-white/10"
+        src="/map-preview.svg"
+        alt="Kartenansicht The Jungle Growshop Dortmund"
+        loading="lazy"
+      />
+      <div class="mt-4 flex gap-3">
+        <a class="rounded-full bg-accent-moss/10 px-4 py-2 text-accent-primary" href="/standort/"
+          >Route starten</a
+        >
+        <a class="rounded-full border border-accent-moss/40 px-4 py-2 text-accent-primary" href="tel:+4923195094526"
+          >Jetzt anrufen</a
+        >
+      </div>
+    </div>
+    <aside class="glass-panel rounded-2xl p-6">
+      <h2 class="font-display text-2xl text-accent-primary">Team Jungle</h2>
+      <p class="mt-2 text-sm text-text-dim">
+        Klartext statt Sales-Talk: Setups, die greifen. Watt, Luftwechsel &amp; VPD rechnen wir mit dir
+        live.
+      </p>
+    </aside>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="font-display text-2xl text-accent-primary">FAQ</h2>
+    <details class="glass-panel mt-4 rounded-xl p-4">
+      <summary class="cursor-pointer font-semibold">Welche LED passt zu 100×100?</summary>
+      <p class="mt-2 text-sm text-text-dim">
+        Meist 250–350 W (High-End Bar), Dimmer &amp; Controller einplanen.
+      </p>
+    </details>
+    <details class="glass-panel mt-3 rounded-xl p-4">
+      <summary class="cursor-pointer font-semibold">Welcher AKF &amp; EC-Lüfter?</summary>
+      <p class="mt-2 text-sm text-text-dim">
+        Volumen × ACH + Reserve für Filter/Schläuche – wir rechnen es im Laden.
+      </p>
+    </details>
+  </section>
+
+  <section class="mt-12 text-center">
+    <a class="rounded-full bg-accent-moss/10 px-6 py-3 text-accent-primary" href="/kontakt/"
+      >Einmal sauber planen – entspannt ernten</a
+    >
+  </section>
+</PageLayout>
