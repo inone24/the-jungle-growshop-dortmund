@@ -1,0 +1,73 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+interface OpenGraphMeta {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  og?: OpenGraphMeta;
+  breadcrumb?: BreadcrumbItem[];
+}
+
+const {
+  title,
+  description,
+  canonical,
+  og = {},
+  breadcrumb = []
+} = Astro.props as Props;
+
+void breadcrumb;
+
+const canonicalUrl = canonical.trim();
+const {
+  title: ogTitle = title,
+  description: ogDescription = description,
+  image: ogImage = '/og-cover.png',
+  type: ogType = 'website'
+} = og;
+---
+
+<BaseLayout>
+  <Fragment slot="title">
+    <title>{title}</title>
+  </Fragment>
+
+  <Fragment slot="description">
+    <meta name="description" content={description} />
+  </Fragment>
+
+  <Fragment slot="canonical">
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hrefLang="de" href={canonicalUrl} />
+  </Fragment>
+
+  <Fragment slot="og">
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="The Jungle Growshop Dortmund" />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={ogDescription} />
+    <meta name="twitter:image" content={ogImage} />
+  </Fragment>
+
+  <main id="main" class="mx-auto max-w-6xl px-6 pb-24 pt-16">
+    <slot />
+  </main>
+</BaseLayout>
