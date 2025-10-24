@@ -3,9 +3,7 @@ dist
 .local
 .DS_Store
 .env*
-
 astro
-
 .vercel
 .netlify
 .astro
