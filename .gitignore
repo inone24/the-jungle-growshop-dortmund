@@ -9,3 +9,7 @@ astro
 .vercel
 .netlify
 .astro
+# build artefacts – werden von Actions erzeugt
+dist/
+docs/
+sitemap*.xml
