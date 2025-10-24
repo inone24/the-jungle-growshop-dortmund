@@ -1,107 +1,35 @@
 ---
-import meta from '../../content/seo/growshop.json';
-import site from '../../content/global.json';
 import PageLayout from '../layouts/PageLayout.astro';
+import meta from '../../content/seo/growshop.json';
+import global from '../../content/global.json';
 
-const canonical = meta.canonical.trim();
+const canonicalUrl = (meta.canonical ?? '').trim();
+
 const breadcrumb = [
-  { name: 'Start', url: 'https://the-jungle-growshop-dortmund.github.io/' },
-  { name: 'Growshop Dortmund', url: canonical }
+  { name: 'Start', url: 'https://inone24.github.io/the-jungle-growshop-dortmund/' },
+  { name: 'Growshop Dortmund', url: canonicalUrl }
 ];
-
-const heroHighlights = [
-  {
-    icon: '🛠️',
-    title: 'Smart-Grow vor Ort',
-    description: 'UIS, GrowHub & App-Steuerung live testen.'
-  },
-  { icon: '⚡', title: 'Sofort verfügbar', description: 'Zelte, LEDs, AKF/EC, Dünger & Zubehör im Lager.' },
-  {
-    icon: '📐',
-    title: 'Setup-Berechnung',
-    description: 'Watt, Luftwechsel & VPD gemeinsam dimensionieren.'
-  },
-  {
-    icon: '🔄',
-    title: 'Service & Ersatz',
-    description: 'Troubleshooting, Ersatzteile und Nachrüstungen.'
-  }
-];
-
-const heroShortcuts = [
-  { label: 'Smart Systems', href: '#smart_systems_spotlight' },
-  { label: 'Setup Ablauf', href: '#setup_timeline' },
-  { label: 'Services', href: '#service_cards' },
-  { label: 'Kontakt', href: '#reach_us' }
-];
-
-const smartSystems = [
-  {
-    title: 'AC Infinity · UIS Ecosystem',
-    description:
-      'Controller 69 Pro/Pro+, Sunrise/Sunset, VPD-Automation. Kombinierbar mit EC-Lüftern, LEDs & Sensoren.',
-    features: [
-      'UIS-Kits für Zelte von 60×60 bis 150×300 cm',
-      'Automatisierte Klima-Workflows inkl. Nachtabsenkung',
-      'Daisy-Chain-kompatible LEDs & Inline-Fans'
-    ]
-  },
-  {
-    title: 'VIVOSUN · GrowHub',
-    description:
-      'Automationen, Rezepte & Cloud-Diary. Daisy-Chain-LEDs, Klima & Bewässerung zentral orchestriert.',
-    features: [
-      'GrowHub E42/E52 Controller mit App-Monitoring',
-      'Rezepte & Automationen für Licht, Klima & Bewässerung',
-      'Sensorintegration für VPD, EC & Drain-Checks'
-    ]
-  }
-];
-
-const setupSteps = [
-  'Ziel & Fläche definieren',
-  'Dimensionierung von Licht & Luft',
-  'Klima- & Steuerung auswählen',
-  'App-Pairing & Sensorik',
-  'Feintuning & Schalldämmung',
-  'Daten nutzen & erweitern'
-];
-
-const services = [
-  {
-    icon: '📝',
-    title: 'Quick-Check',
-    description: 'Skizzen, Maße, Fotos – wir rechnen Watt & Luftwechsel live am Tresen.'
-  },
-  {
-    icon: '🧰',
-    title: 'Komplett-Set',
-    description: 'Zelt, LED-Bar, EC-Lüfter/AKF, Controller & Sensoren – sauber kombiniert.'
-  },
-  {
-    icon: '🧪',
-    title: 'Troubleshooting',
-    description: 'Geruch, Hitze, Feuchte, pH/EC – Ursachen finden & Lösungen mitgeben.'
-  },
-  {
-    icon: '🔧',
-    title: 'Ersatz & Zubehör',
-    description: 'Filter, Schlauch, Schalldämpfer, Adapter, Aufhängungen & mehr sofort verfügbar.'
-  }
-];
-
-const contactChips = [...site.payments, site.hours, ...site.transport];
 
 const faq = [
   {
-    question: 'Welche LED passt zu 100×100?',
+    question: 'Welche LED für 100×100 cm?',
     answer:
-      'Meist 250–350 W High-End-Bar oder Kombination. Dimmer & Controller für Nachtabsenkung/Boost einplanen.'
+      'High-End Bar-Systeme mit etwa 250–350 W liefern das passende PPFD-Niveau. Mit Dimmer, Controller und Nachtabsenkung kannst du den Verlauf feinjustieren.'
   },
   {
-    question: 'Welcher AKF & EC-Lüfter?',
+    question: 'Welcher AKF & EC-Lüfter passt?',
     answer:
-      'Volumen × Luftwechsel + Reserve für Filter & Schlauchführung. Wir rechnen das im Laden mit dir durch.'
+      'Grundlage ist das Zeltvolumen multipliziert mit dem gewünschten Luftwechsel. Plane zusätzliche Reserve für Aktivkohlefilter, Bögen und Schalldämpfer ein.'
+  },
+  {
+    question: 'Wie starte ich mit Dünger?',
+    answer:
+      'Anzucht ca. 0,4–1,0 mS/cm, Vegetation 1,2–2,0 mS/cm, Blüte 1,6–2,4 mS/cm. Halte den pH je nach Medium stabil: Erde 6,2–6,8 · Coco 5,8–6,2 · Hydro 5,5–6,0.'
+  },
+  {
+    question: 'Brauche ich einen Termin?',
+    answer:
+      'Für Komplett-Sets empfehlen wir einen Slot von 20–30 Minuten. Komm gern spontan vorbei oder sichere dir einen Termin über das Kontaktformular.'
   }
 ];
 ---
@@ -109,296 +37,233 @@ const faq = [
 <PageLayout
   title={meta.title}
   description={meta.description}
-  canonical={canonical}
+  canonical={canonicalUrl}
   breadcrumb={breadcrumb}
   faq={faq}
 >
-  <section id="hero" class="mb-16" aria-labelledby="hero-heading">
-    <div class="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-      <div>
-        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-accent-primary">Growshop Dortmund</p>
-        <h1 id="hero-heading" class="mt-4 font-display text-3xl text-text-high sm:text-4xl">
-          Ehrliche Beratung, Smart-Grow zum Anfassen – sofort verfügbar
-        </h1>
-        <p class="mt-4 max-w-3xl text-text-dim">
-          Wir kombinieren Licht, Klima und Steuerung zu Setups, die greifen. Bring Maße, Fotos &amp; Ziele
-          mit – wir rechnen Watt, Luftwechsel, VPD und Schalldämmung live am Tresen.
-        </p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a
-            class="
-              rounded-full bg-accent-moss/10 px-5 py-2 text-sm font-semibold text-accent-primary
-              shadow-[var(--glow-alt)] transition hover:bg-accent-moss/20 focus-ring
-            "
-            href="/kontakt/"
-            aria-label="Beratung vereinbaren und Kontakt aufnehmen"
-          >
-            Beratung &amp; Kauf
-          </a>
-          <a
-            class="
-              rounded-full border border-accent-moss/40 px-5 py-2 text-sm font-semibold text-accent-primary
-              transition hover:border-accent-moss/60 focus-ring
-            "
-            href="/standort/"
-            aria-label="Route zum Jungle Growshop Dortmund planen"
-          >
-            Route starten
-          </a>
-          <a
-            class="
-              rounded-full border border-white/20 px-5 py-2 text-sm font-semibold text-text-high
-              transition hover:border-white/40 focus-ring
-            "
-            href={site.phone_link}
-            aria-label={`Jetzt im Jungle Growshop Dortmund anrufen unter ${site.phone_display}`}
-          >
-            {site.phone_display}
-          </a>
-        </div>
-        <nav aria-label="Bereiche auf dieser Seite" class="mt-6">
-          <ul class="flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-text-dim">
-            {heroShortcuts.map((item) => (
-              <li>
-                <a
-                  class="
-                    glass-panel inline-flex items-center gap-2 rounded-full px-4 py-2 text-[0.7rem]
-                    text-text-high transition hover:text-accent-primary focus-ring
-                  "
-                  href={item.href}
-                >
-                  <span aria-hidden="true">↘</span>
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
-      <aside class="glass-panel flex flex-col justify-between rounded-2xl p-6 shadow-card" aria-label="Highlights">
-        <ul class="space-y-4">
-          {heroHighlights.map((item) => (
-            <li class="flex gap-3">
-              <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent-moss/10 text-xl" aria-hidden="true">
-                {item.icon}
-              </span>
-              <div>
-                <h2 class="font-display text-lg text-accent-primary">{item.title}</h2>
-                <p class="mt-1 text-sm text-text-dim">{item.description}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <dl class="mt-6 grid grid-cols-2 gap-3 text-xs text-text-dim">
-          <div class="glass-panel rounded-xl px-4 py-3">
-            <dt class="font-semibold text-text-high">Adresse</dt>
-            <dd class="mt-1">{site.address}</dd>
-          </div>
-          <div class="glass-panel rounded-xl px-4 py-3">
-            <dt class="font-semibold text-text-high">Öffnungszeiten</dt>
-            <dd class="mt-1">{site.hours}</dd>
-          </div>
-        </dl>
-      </aside>
-    </div>
-  </section>
-
-  <section
-    id="smart_systems_spotlight"
-    class="mt-20"
-    aria-labelledby="smart-systems"
-  >
-    <div class="flex items-baseline justify-between gap-4">
-      <div>
-        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent-primary">Smart Systems</p>
-        <h2 id="smart-systems" class="mt-3 font-display text-2xl text-text-high">
-          Spotlight: Automatisierung &amp; App-Steuerung
-        </h2>
-      </div>
-    </div>
-    <div class="mt-6 grid gap-6 md:grid-cols-2">
-      {smartSystems.map((system) => (
-        <article class="glass-panel flex h-full flex-col rounded-2xl p-6 shadow-card">
-          <h3 class="font-display text-xl text-accent-primary">{system.title}</h3>
-          <p class="mt-3 text-sm text-text-dim">{system.description}</p>
-          <ul class="mt-4 space-y-2 text-sm text-text-dim">
-            {system.features.map((feature) => (
-              <li class="flex items-start gap-2">
-                <span class="mt-[3px] text-accent-primary" aria-hidden="true">•</span>
-                <span>{feature}</span>
-              </li>
-            ))}
-          </ul>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section
-    id="setup_timeline"
-    class="mt-20"
-    aria-labelledby="setup-timeline"
-  >
-    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent-primary">Ablauf</p>
-    <h2 id="setup-timeline" class="mt-3 font-display text-2xl text-text-high">In sechs Schritten zum Setup</h2>
-    <ol class="mt-6 grid gap-4 md:grid-cols-3">
-      {setupSteps.map((step, index) => (
-        <li class="glass-panel rounded-2xl p-5 text-sm text-text-high shadow-card">
-          <span class="font-display text-accent-primary">{index + 1}&nbsp;·&nbsp;</span>
-          {step}
-        </li>
-      ))}
-    </ol>
-  </section>
-
-  <section
-    id="service_cards"
-    class="mt-20"
-    aria-labelledby="services"
-  >
-    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent-primary">Services</p>
-    <h2 id="services" class="mt-3 font-display text-2xl text-text-high">Warum The Jungle?</h2>
-    <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-      {services.map((service) => (
-        <article class="glass-panel flex h-full flex-col gap-3 rounded-2xl p-6 shadow-card">
-          <div class="flex items-center gap-3">
-            <span class="text-2xl" aria-hidden="true">{service.icon}</span>
-            <h3 class="font-display text-lg text-accent-primary">{service.title}</h3>
-          </div>
-          <p class="text-sm text-text-dim">{service.description}</p>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section
-    id="reach_us"
-    class="mt-20 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]"
-    aria-labelledby="reach-us"
-  >
-    <div class="glass-panel rounded-2xl p-6 shadow-card">
-      <p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent-primary">Standort</p>
-      <h2 id="reach-us" class="mt-3 font-display text-2xl text-text-high">Unser Standort in Dortmund</h2>
-      <address class="mt-4 not-italic text-sm text-text-dim">
-        {site.address}<br />
-        <a class="hover:text-accent-primary focus-ring" href={site.phone_link}>{site.phone_display}</a><br />
-        <a class="hover:text-accent-primary focus-ring" href={`mailto:${site.email.trim()}`}>{site.email.trim()}</a><br />
-        {site.hours}
-      </address>
-      <ul class="mt-4 flex flex-wrap gap-2 text-xs text-text-dim">
-        {contactChips.map((chip) => (
-          <li class="glass-panel inline-flex items-center rounded-full px-3 py-1">{chip}</li>
-        ))}
-      </ul>
-      <img
-        class="mt-6 w-full rounded-xl border border-white/10"
-        src="/map-preview.svg"
-        alt="Karte mit Markierung für The Jungle Growshop Dortmund"
-        loading="lazy"
-      />
-      <div class="mt-6 flex flex-wrap gap-3">
-        <a
-          class="
-            rounded-full bg-accent-moss/10 px-4 py-2 text-sm font-semibold text-accent-primary
-            shadow-[var(--glow-alt)] transition hover:bg-accent-moss/20 focus-ring
-          "
-          href="/standort/"
-          aria-label="Route zum Jungle Growshop Dortmund anzeigen"
-        >
-          Route planen
-        </a>
-        <a
-          class="
-            rounded-full border border-accent-moss/40 px-4 py-2 text-sm font-semibold text-accent-primary
-            transition hover:border-accent-moss/60 focus-ring
-          "
-          href={site.phone_link}
-          aria-label={`Jetzt telefonisch anfragen unter ${site.phone_display}`}
-        >
-          Jetzt anrufen
-        </a>
-      </div>
-    </div>
-    <aside class="glass-panel rounded-2xl p-6 shadow-card">
-      <p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent-primary">Team</p>
-      <h2 class="mt-3 font-display text-2xl text-text-high">Team Jungle</h2>
-      <p class="mt-3 text-sm text-text-dim">
-        Klartext statt Sales-Talk: Wir planen Setups, die greifen. Von Schalldämmung bis Sensorik – wir
-        zeigen dir live, was funktioniert und wie du es erweiterst.
+  <section class="space-y-16">
+    <header class="text-center">
+      <h1 class="font-display text-3xl text-text-high sm:text-4xl">Growshop Dortmund – ehrlich beraten, sofort verfügbar</h1>
+      <p class="mx-auto mt-4 max-w-3xl text-text-dim">
+        Zelte, LED-Bar-Systeme, EC-Lüfter mit AKF, Dünger &amp; Substrate – plus Smart-Steuerung. Wir dimensionieren Leistung,
+        Luftwechsel &amp; VPD mit dir am Tresen.
       </p>
-      <div class="mt-6 flex flex-wrap gap-3">
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
         <a
-          class="
-            rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-text-high
-            transition hover:border-white/40 focus-ring
-          "
-          href="/team/"
-          aria-label="Mehr über das Team Jungle erfahren"
+          class="rounded-full bg-accent-moss/10 px-5 py-2 text-sm font-semibold text-accent-primary shadow-[var(--glow-alt)] transition hover:bg-accent-moss/20 focus-ring"
+          href="/kontakt/"
         >
-          Team kennenlernen
+          Beratung &amp; Kauf
         </a>
         <a
-          class="
-            rounded-full bg-white px-4 py-2 text-sm font-semibold text-background-dark transition
-            hover:bg-white/90 focus-ring
-          "
-          href="/kontakt/"
-          aria-label="Kontaktformular des Jungle Growshop öffnen"
+          class="rounded-full border border-accent-moss/40 px-5 py-2 text-sm font-semibold text-accent-primary transition hover:border-accent-moss/60 focus-ring"
+          href="/standort/"
         >
-          Nachricht senden
+          Route starten
+        </a>
+        <a
+          class="rounded-full border border-white/20 px-5 py-2 text-sm font-semibold text-text-high transition hover:border-white/40 focus-ring"
+          href={global.phone_link}
+        >
+          {global.phone_display}
         </a>
       </div>
-    </aside>
-  </section>
+    </header>
 
-  <section
-    id="faq"
-    class="mt-20"
-    aria-labelledby="faq-heading"
-  >
-    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent-primary">FAQ</p>
-    <h2 id="faq-heading" class="mt-3 font-display text-2xl text-text-high">Häufig gestellte Fragen</h2>
-    <div class="mt-6 space-y-4">
-      {faq.map((item) => (
-        <details class="glass-panel rounded-2xl p-5 text-left shadow-card">
-          <summary class="cursor-pointer font-display text-lg text-accent-primary focus:outline-none focus-ring">
-            {item.question}
-          </summary>
-          <p class="mt-3 text-sm text-text-dim">{item.answer}</p>
-        </details>
-      ))}
-    </div>
-  </section>
-
-  <section id="cta" class="mt-20 text-center">
-    <div class="glass-panel inline-flex flex-col items-center gap-4 rounded-2xl px-8 py-10 shadow-card">
-        <h2 class="font-display text-2xl text-text-high">Einmal sauber planen – entspannt ernten</h2>
-        <p class="max-w-2xl text-sm text-text-dim">
-          Ob Smart-Grow, klassisches Zelt oder Troubleshooting: Wir nehmen uns Zeit für dein Projekt und
-          haben die passenden Komponenten direkt im Lager.
+    <section id="smart_systems_spotlight" aria-labelledby="smart-systems" class="space-y-6">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent-primary">Smart-Systeme</p>
+        <h2 id="smart-systems" class="mt-3 font-display text-3xl text-text-high sm:text-4xl">Smart-Systeme Spotlight</h2>
+        <p class="mt-3 max-w-2xl text-text-dim">
+          Automation zum Anfassen: Wir zeigen dir App-Workflows für Klima, Licht und Bewässerung – inklusive Sensor-Pairing und Data-Logging.
         </p>
-        <div class="flex flex-wrap justify-center gap-3">
+      </div>
+      <div class="grid gap-6 sm:grid-cols-2">
+        <article class="glass-panel rounded-2xl p-6 shadow-card transition hover:shadow-[var(--glow-primary)]">
+          <h3 class="font-display text-xl text-accent-primary">AC Infinity UIS</h3>
+          <p class="mt-2 text-sm text-text-dim">
+            Szenengerechte Automation für Klima, VPD &amp; Bewässerung mit modularen Zubehören.
+          </p>
+          <ul class="mt-4 flex flex-wrap gap-2 text-xs text-text-dim">
+            <li class="rounded-full border border-white/15 px-3 py-1">Controller 69 Pro/Pro+</li>
+            <li class="rounded-full border border-white/15 px-3 py-1">VPD-Programme</li>
+            <li class="rounded-full border border-white/15 px-3 py-1">Sunrise/Sunset-Dimming</li>
+          </ul>
+        </article>
+        <article class="glass-panel rounded-2xl p-6 shadow-card transition hover:shadow-[var(--glow-primary)]">
+          <h3 class="font-display text-xl text-accent-primary">VIVOSUN GrowHub</h3>
+          <p class="mt-2 text-sm text-text-dim">
+            App-gesteuerte Grow-Umgebung mit AeroLight &amp; AeroZesh – leise, effizient, skalierbar.
+          </p>
+          <ul class="mt-4 flex flex-wrap gap-2 text-xs text-text-dim">
+            <li class="rounded-full border border-white/15 px-3 py-1">Automationen</li>
+            <li class="rounded-full border border-white/15 px-3 py-1">Grow Diary</li>
+            <li class="rounded-full border border-white/15 px-3 py-1">Daisy-Chain</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="setup_timeline" aria-labelledby="setup-heading" class="space-y-6">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent-primary">Ablauf</p>
+        <h2 id="setup-heading" class="mt-3 font-display text-3xl text-text-high sm:text-4xl">In 6 Schritten zum Setup</h2>
+      </div>
+      <ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <li class="glass-panel rounded-xl p-4">
+          <span class="font-display text-accent-primary">1 · Analyse</span>
+          <p class="mt-2 text-sm text-text-dim">Raumgröße, Energie, Klima, Ziel definieren.</p>
+        </li>
+        <li class="glass-panel rounded-xl p-4">
+          <span class="font-display text-accent-primary">2 · Planung</span>
+          <p class="mt-2 text-sm text-text-dim">Komponenten &amp; Budget smart kombinieren.</p>
+        </li>
+        <li class="glass-panel rounded-xl p-4">
+          <span class="font-display text-accent-primary">3 · Aufbau</span>
+          <p class="mt-2 text-sm text-text-dim">Zelt, Licht, Abluft sauber &amp; sicher montieren.</p>
+        </li>
+        <li class="glass-panel rounded-xl p-4">
+          <span class="font-display text-accent-primary">4 · Kalibrierung</span>
+          <p class="mt-2 text-sm text-text-dim">Sensorik, Controller &amp; Profile einrichten.</p>
+        </li>
+        <li class="glass-panel rounded-xl p-4">
+          <span class="font-display text-accent-primary">5 · Testlauf</span>
+          <p class="mt-2 text-sm text-text-dim">PPFD, Klima und Geräuschpegel prüfen.</p>
+        </li>
+        <li class="glass-panel rounded-xl p-4">
+          <span class="font-display text-accent-primary">6 · Aftercare</span>
+          <p class="mt-2 text-sm text-text-dim">Wartung, Ersatzteile &amp; Troubleshooting planen.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="service_cards" aria-labelledby="services-heading" class="space-y-6">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent-primary">Services</p>
+        <h2 id="services-heading" class="mt-3 font-display text-3xl text-text-high sm:text-4xl">Services vor Ort</h2>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <article class="glass-panel rounded-xl p-5 shadow-card transition hover:shadow-[var(--glow-primary)]">
+          <h3 class="font-semibold text-accent-primary">Quick-Check</h3>
+          <p class="mt-2 text-sm text-text-dim">Bringe Fotos &amp; Maße mit – wir geben Sofortdiagnosen.</p>
+        </article>
+        <article class="glass-panel rounded-xl p-5 shadow-card transition hover:shadow-[var(--glow-primary)]">
+          <h3 class="font-semibold text-accent-primary">Komplett-Set</h3>
+          <p class="mt-2 text-sm text-text-dim">Individuell konfiguriert mit Aufbauplan &amp; Einkaufsliste.</p>
+        </article>
+        <article class="glass-panel rounded-xl p-5 shadow-card transition hover:shadow-[var(--glow-primary)]">
+          <h3 class="font-semibold text-accent-primary">Troubleshooting</h3>
+          <p class="mt-2 text-sm text-text-dim">Fehlersuche für Klima, Schädlinge, Bewässerung, Rezepte.</p>
+        </article>
+        <article class="glass-panel rounded-xl p-5 shadow-card transition hover:shadow-[var(--glow-primary)]">
+          <h3 class="font-semibold text-accent-primary">Ersatzteile</h3>
+          <p class="mt-2 text-sm text-text-dim">Schnelle Beschaffung von Lüfterrädern, Filtern, Dichtungen.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="reach_us" aria-labelledby="reach-heading" class="grid gap-6 lg:grid-cols-[1.05fr_.95fr]">
+      <div class="glass-panel rounded-2xl p-6 shadow-card">
+        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent-primary">Standort</p>
+        <h2 id="reach-heading" class="mt-3 font-display text-3xl text-text-high sm:text-4xl">So erreichst du uns</h2>
+        <p class="mt-2 text-sm text-text-dim">
+          {global.address} · Tel. {global.phone_display} · {global.hours}
+        </p>
+        <div class="mt-3 flex flex-wrap gap-2 text-xs text-text-dim">
+          {global.payments.map((payment) => (
+            <span class="rounded-full border border-white/15 px-3 py-1">💳 {payment}</span>
+          ))}
+          {global.transport.map((option) => (
+            <span class="rounded-full border border-white/15 px-3 py-1">🚇 {option}</span>
+          ))}
+        </div>
+        <a
+          href="/standort/"
+          class="mt-4 block overflow-hidden rounded-xl border border-white/10 transition hover:shadow-[var(--glow-primary)] focus-ring"
+        >
+          <img src="/map-preview.svg" alt="Karte The Jungle Growshop Dortmund" loading="lazy" class="w-full" />
+        </a>
+        <div class="mt-4 flex flex-wrap gap-2">
           <a
-            class="
-              rounded-full bg-accent-moss/10 px-6 py-3 text-sm font-semibold text-accent-primary
-              shadow-[var(--glow-alt)] transition hover:bg-accent-moss/20 focus-ring
-            "
-            href="/kontakt/"
-            aria-label="Beratung für Growsetup anfragen"
+            class="rounded-full bg-accent-moss/10 px-4 py-2 text-sm font-semibold text-accent-primary shadow-[var(--glow-alt)] transition hover:bg-accent-moss/20 focus-ring"
+            href="/standort/"
           >
-            Beratung anfragen
+            Route planen
           </a>
           <a
-            class="
-              rounded-full border border-accent-moss/40 px-6 py-3 text-sm font-semibold text-accent-primary
-              transition hover:border-accent-moss/60 focus-ring
-            "
-            href={site.phone_link}
-            aria-label={`Telefonische Beratung unter ${site.phone_display} vereinbaren`}
+            class="rounded-full border border-accent-moss/40 px-4 py-2 text-sm font-semibold text-accent-primary transition hover:border-accent-moss/60 focus-ring"
+            href={global.phone_link}
           >
-            Direkt anrufen
+            Jetzt anrufen
           </a>
         </div>
-    </div>
+      </div>
+      <aside class="glass-panel rounded-2xl p-6 shadow-card">
+        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent-primary">Team</p>
+        <h2 class="mt-3 font-display text-3xl text-text-high sm:text-4xl">Team Jungle</h2>
+        <p class="mt-3 text-sm text-text-dim">
+          Grow-Engineers, Hydro-Pros und LED-Nerds – wir planen dein Setup, kalibrieren Controller und begleiten dich durch den kompletten Run.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a
+            class="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-text-high transition hover:border-white/40 focus-ring"
+            href="/team/"
+          >
+            Team ansehen
+          </a>
+          <a
+            class="rounded-full bg-white px-4 py-2 text-sm font-semibold text-background-dark transition hover:bg-white/90 focus-ring"
+            href="/kontakt/"
+          >
+            Nachricht senden
+          </a>
+        </div>
+      </aside>
+    </section>
+
+    <section id="faq" aria-labelledby="faq-heading" class="space-y-4">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent-primary">FAQ</p>
+        <h2 id="faq-heading" class="mt-3 font-display text-3xl text-text-high sm:text-4xl">FAQ</h2>
+      </div>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <details class="glass-panel rounded-xl p-4">
+          <summary class="cursor-pointer font-semibold text-accent-primary focus:outline-none focus-ring">
+            Welche LED für 100×100 cm?
+          </summary>
+          <div class="pt-2 text-sm text-text-dim">
+            High-End Bar-Systeme ~250–350 W liefern das passende PPFD-Niveau. Mit Dimmer, Controller und Nachtabsenkung kannst du den Verlauf feinjustieren.
+            <a class="ml-1 underline" href="/produkte/pflanzenbeleuchtung/">Mehr zu LED Grow Lampen</a>.
+          </div>
+        </details>
+        <details class="glass-panel rounded-xl p-4">
+          <summary class="cursor-pointer font-semibold text-accent-primary focus:outline-none focus-ring">
+            Welcher AKF &amp; EC-Lüfter passt?
+          </summary>
+          <div class="pt-2 text-sm text-text-dim">
+            Volumen × Luftwechsel + Reserve für Filter &amp; Bögen. Wir rechnen es im Laden oder nutze den AKF-Rechner auf
+            <a class="ml-1 underline" href="/produkte/lueftung/">Lüftung &amp; Klima</a>.
+          </div>
+        </details>
+        <details class="glass-panel rounded-xl p-4">
+          <summary class="cursor-pointer font-semibold text-accent-primary focus:outline-none focus-ring">
+            Wie starte ich mit Dünger?
+          </summary>
+          <div class="pt-2 text-sm text-text-dim">
+            Anzucht ca. 0,4–1,0 mS/cm, Vegetation 1,2–2,0 mS/cm, Blüte 1,6–2,4 mS/cm. Halte den pH je nach Medium stabil: Erde 6,2–6,8 · Coco 5,8–6,2 · Hydro 5,5–6,0.
+            <a class="ml-1 underline" href="/produkte/duenger/">Nährstoff-Guide</a>.
+          </div>
+        </details>
+        <details class="glass-panel rounded-xl p-4">
+          <summary class="cursor-pointer font-semibold text-accent-primary focus:outline-none focus-ring">
+            Brauche ich einen Termin?
+          </summary>
+          <div class="pt-2 text-sm text-text-dim">
+            Nicht zwingend – für Komplett-Sets empfehlen wir 20–30 Minuten Slot.
+            <a class="ml-1 underline" href="/kontakt/">Jetzt vereinbaren →</a>
+          </div>
+        </details>
+      </div>
+    </section>
   </section>
 </PageLayout>

@@ -18,20 +18,36 @@ const phoneLink = global.phone_link ?? 'tel:+4923195094526';
       <span class="text-text-high">{global.brand}</span>
     </a>
     <nav aria-label="Hauptnavigation" class="hidden items-center gap-6 text-sm md:flex">
-      <a class="text-text-dim hover:text-accent-primary focus-ring" href="/">Start</a>
-      <a class="text-text-dim hover:text-accent-primary focus-ring" href="/growshop_dortmund/"
+      <a class="text-text-dim transition hover:text-accent-primary focus-ring" href="/">Start</a>
+      <a class="text-text-dim transition hover:text-accent-primary focus-ring" href="/growshop_dortmund/"
         >Growshop Dortmund</a
       >
-      <a class="text-text-dim hover:text-accent-primary focus-ring" href="/produkte/">Produkte</a>
-      <a class="text-text-dim hover:text-accent-primary focus-ring" href="/wissen/"
+      <a class="text-text-dim transition hover:text-accent-primary focus-ring" href="/produkte/">Produkte</a>
+      <a class="text-text-dim transition hover:text-accent-primary focus-ring" href="/wissen/"
         >Wissen &amp; Downloads</a
       >
-      <a class="text-text-dim hover:text-accent-primary focus-ring" href="/team/">Team</a>
-      <a class="text-text-dim hover:text-accent-primary focus-ring" href="/standort/">Standort</a>
-      <a class="text-text-dim hover:text-accent-primary focus-ring" href="/kontakt/">Kontakt</a>
+      <a class="text-text-dim transition hover:text-accent-primary focus-ring" href="/team/">Team</a>
+      <a class="text-text-dim transition hover:text-accent-primary focus-ring" href="/standort/">Standort</a>
+      <a class="text-text-dim transition hover:text-accent-primary focus-ring" href="/kontakt/">Kontakt</a>
     </nav>
     <a
-      class="hidden rounded-full border border-accent-moss/40 bg-accent-moss/10 px-4 py-2 text-sm font-semibold text-accent-primary shadow-[var(--glow-alt)] hover:bg-accent-moss/20 focus-ring md:inline-flex"
+      class:list={[
+        'hidden',
+        'md:inline-flex',
+        'rounded-full',
+        'border',
+        'border-accent-moss/40',
+        'bg-accent-moss/10',
+        'px-4',
+        'py-2',
+        'text-sm',
+        'font-semibold',
+        'text-accent-primary',
+        'shadow-[var(--glow-alt)]',
+        'transition',
+        'hover:bg-accent-moss/20',
+        'focus-ring'
+      ]}
       href={phoneLink}
     >
       Anrufen

@@ -6,6 +6,16 @@ module.exports = {
     './public/**/*.html'
   ],
   theme: {
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: '1.5rem',
+        lg: '2rem'
+      },
+      screens: {
+        '2xl': '1200px'
+      }
+    },
     extend: {
       colors: {
         'accent-primary': 'var(--accent-primary)',
