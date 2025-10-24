@@ -37,17 +37,17 @@ const canonicalUrl = (canonical ?? "").trim();
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content="The Jungle Growshop Dortmund" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:title" content="The Jungle Growshop Dortmund" />
     <meta name="twitter:description" content={description} />
     <meta property="og:image" content={ogImage} />
-    <!-- JSON-LD aus eigenem Component, schreibt echtes JSON -->
+    <!-- JSON-LD inline (alternativ: eigenes SchemaScript-Component einbinden) -->
     <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
+      "@context":"https://schema.org",
       "@type": "LocalBusiness",
       "name": "The Jungle Growshop Dortmund",
       "url": canonicalUrl,
       "telephone": "0231 95094526",
-      "address": { "@type": "PostalAddress", "streetAddress": "Eberstr. 18", "addressLocality":"Dortmund", "postalCode":"44145", "addressCountry":"DE" }
+      "address": { "@type":"PostalAddress","streetAddress":"Eberstr. 18","addressLocality":"Dortmund","postalCode":"44145","addressCountry":"DE" }
     })}></script>
   </fragment>
 
