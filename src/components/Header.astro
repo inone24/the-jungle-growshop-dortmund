@@ -1,0 +1,40 @@
+---
+import global from '../../content/global.json';
+
+const phoneLink = global.phone_link ?? 'tel:+4923195094526';
+---
+
+<header class="sticky top-0 z-50 border-b border-white/5 bg-[rgba(10,10,10,0.85)] backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <a
+      class="flex items-center gap-2 font-display text-lg tracking-wide"
+      href="/"
+      aria-label={global.brand}
+    >
+      <span
+        class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent-moss/20 text-accent-primary"
+        >🪴</span
+      >
+      <span class="text-text-high">{global.brand}</span>
+    </a>
+    <nav aria-label="Hauptnavigation" class="hidden items-center gap-6 text-sm md:flex">
+      <a class="text-text-dim hover:text-accent-primary focus-ring" href="/">Start</a>
+      <a class="text-text-dim hover:text-accent-primary focus-ring" href="/growshop_dortmund/"
+        >Growshop Dortmund</a
+      >
+      <a class="text-text-dim hover:text-accent-primary focus-ring" href="/produkte/">Produkte</a>
+      <a class="text-text-dim hover:text-accent-primary focus-ring" href="/wissen/"
+        >Wissen &amp; Downloads</a
+      >
+      <a class="text-text-dim hover:text-accent-primary focus-ring" href="/team/">Team</a>
+      <a class="text-text-dim hover:text-accent-primary focus-ring" href="/standort/">Standort</a>
+      <a class="text-text-dim hover:text-accent-primary focus-ring" href="/kontakt/">Kontakt</a>
+    </nav>
+    <a
+      class="hidden rounded-full border border-accent-moss/40 bg-accent-moss/10 px-4 py-2 text-sm font-semibold text-accent-primary shadow-[var(--glow-alt)] hover:bg-accent-moss/20 focus-ring md:inline-flex"
+      href={phoneLink}
+    >
+      Anrufen
+    </a>
+  </div>
+</header>
