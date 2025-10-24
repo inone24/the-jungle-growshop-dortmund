@@ -11,3 +11,8 @@ astro
 dist/
 docs/
 sitemap*.xml
+
+# build artefacts – werden von Actions erzeugt
+dist/
+docs/
+sitemap*.xml
