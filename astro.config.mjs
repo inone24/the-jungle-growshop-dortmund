@@ -4,7 +4,9 @@ import sitemap from '@astrojs/sitemap';
 import compress from 'astro-compress';
 
 export default defineConfig({
-  site: 'https://the-jungle-growshop-dortmund.github.io',
+  site: "https://inone24.github.io/the-jungle-growshop-dortmund",
+  base: "/the-jungle-growshop-dortmund",
+  outDir: "dist",
   output: 'static',
   integrations: [
     tailwind({ applyBaseStyles: true }),
