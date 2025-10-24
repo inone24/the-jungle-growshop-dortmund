@@ -1,6 +1,24 @@
 ---
-const schemas: unknown[] = [];
+// src/components/SchemaScript.astro
+import site from "../../content/global.json";
+interface Crumb { name: string; url: string }
+const { pageUrl, breadcrumbs = [], faq = [], ogImage } = Astro.props as {
+  pageUrl: string; breadcrumbs?: Crumb[]; faq?: { q: string; a: string }[]; ogImage?: string;
+};
+const schemas = [
+  {
+    "@context":"https://www.schema.org",
+    "@type":"LocalBusiness",
+    "name": site.brand,
+    "url": pageUrl,
+    "telephone": site["phone_display"],
+    "address": { "@type":"PostalAddress","streetAddress":"Eberstr. 18","addressLocality":"Dortmund","postalCode":"44145","addressCountry":"DE" }
+  },
+  breadcrumbs.length ? {
+    "@context":"https://www.schema.org","@type":"BreadcrumbList",
+    "itemListElement": breadcrumbs.map((b,i)=>({"@type":"ListItem","position":i+1,"name":b.name,"item":b.url}))
+  } : null
+].filter(Boolean);
 const json = JSON.stringify(schemas);
 ---
-
-<script type="application/ld+json" set:html={json}></script>
+<script type="text/javascript" is:inline>{json}</script>
