@@ -1,80 +1,24 @@
 ---
-import site from '../../content/global.json';
-
-export interface Crumb {
-  name: string;
-  url: string;
-}
-
-interface Props {
-  pageUrl?: string;
-  breadcrumb?: Crumb[];
-  faq?: { question: string; answer: string }[];
-  ogImage?: string;
-}
-
-const { pageUrl, breadcrumb = [], faq = [], ogImage } = Astro.props as Props;
-
-const resolvedUrl = (pageUrl ?? 'https://the-jungle-growshop-dortmund.github.io/').trim();
-
-const localBusiness = {
-  '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  name: site.brand,
-  url: resolvedUrl,
-  telephone: site.phone_display,
-  image: ogImage ?? '/og-cover.png',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Eberstr. 18',
-    addressLocality: 'Dortmund',
-    postalCode: '44145',
-    addressCountry: 'DE'
-  },
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      opens: '10:00',
-      closes: '20:00'
-    }
-  ]
+// src/components/SchemaScript.astro
+import site from "../../content/global.json";
+interface Crumb { name: string; url: string }
+const { pageUrl, breadcrumbs = [], faq = [], ogImage } = Astro.props as {
+  pageUrl: string; breadcrumbs?: Crumb[]; faq?: { q: string; a: string }[]; ogImage?: string;
 };
-
-const crumbs = breadcrumb.length
-  ? [
-      {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: breadcrumb.map((crumbItem, index) => ({
-          '@type': 'ListItem',
-          position: index + 1,
-          name: crumbItem.name,
-          item: crumbItem.url.trim()
-        }))
-      }
-    ]
-  : [];
-
-const faqSchema = faq.length
-  ? [
-      {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faq.map((item) => ({
-          '@type': 'Question',
-          name: item.question,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: item.answer
-          }
-        }))
-      }
-    ]
-  : [];
-
-const schemas = [localBusiness, ...crumbs, ...faqSchema];
-const json = JSON.stringify(schemas, null, 2);
+const schemas = [
+  {
+    "@context":"https://www.schema.org",
+    "@type":"LocalBusiness",
+    "name": site.brand,
+    "url": pageUrl,
+    "telephone": site["phone_display"],
+    "address": { "@type":"PostalAddress","streetAddress":"Eberstr. 18","addressLocality":"Dortmund","postalCode":"44145","addressCountry":"DE" }
+  },
+  breadcrumbs.length ? {
+    "@context":"https://www.schema.org","@type":"BreadcrumbList",
+    "itemListElement": breadcrumbs.map((b,i)=>({"@type":"ListItem","position":i+1,"name":b.name,"item":b.url}))
+  } : null
+].filter(Boolean);
+const json = JSON.stringify(schemas);
 ---
-
-<script type="application/ld+json" set:html={json}></script>
+<script type="text/javascript" is:inline>{json}</script>
