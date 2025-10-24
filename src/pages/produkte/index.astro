@@ -1,0 +1,43 @@
+---
+import meta from '../../../content/seo/produkte.json';
+import PageLayout from '../../layouts/PageLayout.astro';
+
+const rawBase = import.meta.env.BASE_URL;
+const basePath = rawBase === '/' ? '' : rawBase.replace(/\/$/, '');
+const withBase = (path: string) => `${basePath}${path}`;
+---
+
+<PageLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  breadcrumb={[
+    { name: 'Start', url: 'https://the-jungle-growshop-dortmund.github.io/' },
+    { name: 'Produkte', url: meta.canonical }
+  ]}
+>
+  <h1 class="font-display text-3xl text-text-high">Produkte</h1>
+  <p class="mt-4 max-w-3xl text-text-dim">
+    Entdecke modulare Komponenten, vorkonfigurierte Bundles und Marken-Highlights – täglich auf Lager.
+  </p>
+  <div class="mt-10 grid gap-6 md:grid-cols-2">
+    <a
+      href={withBase('/produkte/pflanzenbeleuchtung/')}
+      class="glass-panel flex h-full flex-col justify-between rounded-2xl p-6 shadow-card transition hover:shadow-[var(--glow-primary)]"
+    >
+      <div>
+        <h2 class="font-display text-2xl text-accent-primary">Pflanzenbeleuchtung</h2>
+        <p class="mt-2 text-sm text-text-dim">LED, CMH &amp; HPS – PPF/PPFD/DLI Basics.</p>
+      </div>
+    </a>
+    <a
+      href={withBase('/produkte/lueftung/')}
+      class="glass-panel flex h-full flex-col justify-between rounded-2xl p-6 shadow-card transition hover:shadow-[var(--glow-primary)]"
+    >
+      <div>
+        <h2 class="font-display text-2xl text-accent-primary">Lüftung &amp; Klima</h2>
+        <p class="mt-2 text-sm text-text-dim">EC-Lüfter, AKF-Sizing, Schalldämpfer, Controller.</p>
+      </div>
+    </a>
+  </div>
+</PageLayout>

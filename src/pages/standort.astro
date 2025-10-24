@@ -1,0 +1,29 @@
+---
+import meta from '../../content/seo/standort.json';
+import PageLayout from '../layouts/PageLayout.astro';
+
+const rawBase = import.meta.env.BASE_URL;
+const basePath = rawBase === '/' ? '' : rawBase.replace(/\/$/, '');
+const withBase = (path: string) => `${basePath}${path}`;
+---
+
+<PageLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  breadcrumb={[
+    { name: 'Start', url: 'https://the-jungle-growshop-dortmund.github.io/' },
+    { name: 'Standort', url: meta.canonical }
+  ]}
+>
+  <h1 class="font-display text-3xl text-text-high">Standort &amp; Anfahrt</h1>
+  <p class="mt-4 max-w-3xl text-text-dim">
+    Eberstr. 18, 44145 Dortmund. ÖPNV (VRR/DSW21) fußläufig, Parkplätze in der Nähe.
+  </p>
+  <img
+    class="mt-6 rounded-xl border border-white/10"
+    src={withBase('/map-preview.svg')}
+    alt="Karte The Jungle Growshop Dortmund"
+    loading="lazy"
+  />
+</PageLayout>
