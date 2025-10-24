@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark light;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-night text-slate-100 font-body antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading;
+  }
+
+  a {
+    @apply text-brand-light underline-offset-4 transition-colors hover:text-emerald-300;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand-light px-6 py-3 text-sm font-semibold text-slate-950 shadow-glow transition hover:shadow-lg hover:shadow-emerald-500/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-light;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-brand-light shadow-soft transition hover:border-brand-light/60 hover:shadow-glow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-light;
+  }
+
+  .card-surface {
+    @apply rounded-4xl border border-white/10 bg-surface-base p-6 shadow-soft backdrop-blur;
+  }
+
+  .card-solid {
+    @apply rounded-4xl border border-white/10 bg-surface-raised p-8 shadow-soft backdrop-blur;
+  }
+
+  .tag-pill {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-wide text-slate-200;
+  }
+
+  .faq-item {
+    @apply overflow-hidden rounded-3xl border border-white/10 bg-surface-base shadow-soft;
+  }
+
+  .faq-summary {
+    @apply flex w-full cursor-pointer items-center justify-between gap-4 px-6 py-5 text-left text-base font-semibold text-white;
+  }
+
+  .faq-content {
+    @apply border-t border-white/10 px-6 pb-6 text-sm text-slate-300;
+  }
+}
+
+.prose h2 {
+  @apply font-heading text-3xl text-brand-light;
+}
+
+details[open] .faq-summary {
+  @apply text-brand-light;
+}
+
+details[open] .faq-toggle-plus {
+  @apply hidden;
+}
+
+details:not([open]) .faq-toggle-minus {
+  @apply hidden;
+}
