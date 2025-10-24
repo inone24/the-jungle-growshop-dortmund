@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark light;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100 font-body antialiased;
+}
+
+a {
+  @apply text-brand-light underline-offset-4 transition-colors hover:text-emerald-300;
+}
+
+.prose h2 {
+  @apply font-heading text-3xl text-brand-light;
+}

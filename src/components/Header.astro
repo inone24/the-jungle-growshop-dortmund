@@ -1,71 +1,25 @@
 ---
-import global from '../../content/global.json';
-
-const phoneLink = global.phone_link ?? 'tel:+4923195094526';
-const rawBase = import.meta.env.BASE_URL;
-const basePath = rawBase === '/' ? '' : rawBase.replace(/\/$/, '');
-const homeHref = basePath || '/';
-const withBase = (path: string) => `${basePath}${path}`;
+import type { NavigationItem } from '../types';
+const { navItems } = Astro.props as { navItems: NavigationItem[] };
 ---
-
-<header class="sticky top-0 z-50 border-b border-white/5 bg-[rgba(10,10,10,0.85)] backdrop-blur">
-  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-    <a
-      class="flex items-center gap-2 font-display text-lg tracking-wide"
-      href={homeHref}
-      aria-label={global.brand}
-    >
-      <span
-        class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent-moss/20 text-accent-primary"
-        >🪴</span
-      >
-      <span class="text-text-high">{global.brand}</span>
+<header class="border-b border-white/10 bg-slate-950/80 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-6 sm:px-6">
+    <a href="/" class="flex items-center gap-3 text-lg font-heading tracking-wide">
+      <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-light/10 text-brand-light">
+        🌿
+      </span>
+      <span>The Jungle Growshop</span>
     </a>
-    <nav aria-label="Hauptnavigation" class="hidden items-center gap-6 text-sm md:flex">
-      <a class="text-text-dim transition hover:text-accent-primary focus-ring" href={homeHref}>Start</a>
-      <a
-        class="text-text-dim transition hover:text-accent-primary focus-ring"
-        href={withBase('/growshop_dortmund/')}
-      >
-        Growshop Dortmund
-      </a>
-      <a class="text-text-dim transition hover:text-accent-primary focus-ring" href={withBase('/produkte/')}>
-        Produkte
-      </a>
-      <a class="text-text-dim transition hover:text-accent-primary focus-ring" href={withBase('/wissen/')}>
-        Wissen &amp; Downloads
-      </a>
-      <a class="text-text-dim transition hover:text-accent-primary focus-ring" href={withBase('/team/')}>
-        Team
-      </a>
-      <a class="text-text-dim transition hover:text-accent-primary focus-ring" href={withBase('/standort/')}>
-        Standort
-      </a>
-      <a class="text-text-dim transition hover:text-accent-primary focus-ring" href={withBase('/kontakt/')}>
-        Kontakt
-      </a>
+    <nav>
+      <ul class="flex flex-wrap items-center gap-4 text-sm font-medium">
+        {navItems.map((item) => (
+          <li>
+            <a href={item.href} class="rounded-full px-3 py-2 transition hover:bg-white/5">
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
     </nav>
-    <a
-      class:list={[
-        'hidden',
-        'md:inline-flex',
-        'rounded-full',
-        'border',
-        'border-accent-moss/40',
-        'bg-accent-moss/10',
-        'px-4',
-        'py-2',
-        'text-sm',
-        'font-semibold',
-        'text-accent-primary',
-        'shadow-[var(--glow-alt)]',
-        'transition',
-        'hover:bg-accent-moss/20',
-        'focus-ring'
-      ]}
-      href={phoneLink}
-    >
-      Anrufen
-    </a>
   </div>
 </header>

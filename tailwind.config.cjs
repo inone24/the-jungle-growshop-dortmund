@@ -1,41 +1,20 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './src/**/*.{astro,html,js,jsx,tsx,vue,svelte,md,mdx}',
-    './content/**/*.json',
-    './public/**/*.html'
-  ],
+  content: ['./src/**/*.{astro,html,js,jsx,ts,tsx,md,mdx}'],
   theme: {
-    container: {
-      center: true,
-      padding: {
-        DEFAULT: '1.5rem',
-        lg: '2rem'
-      },
-      screens: {
-        '2xl': '1200px'
-      }
-    },
     extend: {
       colors: {
-        'accent-primary': 'var(--accent-primary)',
-        'accent-moss': 'var(--accent-alt-moss)',
-        'text-high': 'var(--text-high)',
-        'text-dim': 'var(--text-dim)',
-        'background-dark': 'var(--bg-dark)'
+        brand: {
+          green: '#0f3d2e',
+          light: '#64ffda',
+          sand: '#f1f0e8',
+        },
       },
-      boxShadow: {
-        card: 'var(--shadow-card)'
+      fontFamily: {
+        heading: ['"DM Sans"', 'system-ui', 'sans-serif'],
+        body: ['"Inter"', 'system-ui', 'sans-serif'],
       },
-      borderRadius: {
-        lg: 'var(--radius-lg)',
-        xl: 'var(--radius-xl)'
-      }
     },
-    fontFamily: {
-      sans: ['Manrope', 'system-ui', 'Segoe UI', 'sans-serif'],
-      display: ['Syne', 'Manrope', 'system-ui', 'sans-serif']
-    }
   },
-  plugins: []
+  plugins: [require('@tailwindcss/forms')],
 };

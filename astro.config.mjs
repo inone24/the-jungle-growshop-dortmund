@@ -1,10 +1,13 @@
-import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
-import sitemap from "@astrojs/sitemap";
+import { defineConfig } from 'astro/config';
+import tailwind from '@astrojs/tailwind';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: "https://inone24.github.io/the-jungle-growshop-dortmund",
-  base: "/the-jungle-growshop-dortmund",
-  outDir: "dist",
-  integrations: [tailwind(), sitemap()]
+  site: 'https://the-jungle-growshop-dortmund.de',
+  integrations: [
+    tailwind({
+      applyBaseStyles: false,
+    }),
+    sitemap(),
+  ],
 });

@@ -1,23 +1,6 @@
 node_modules
-dist
-.local
+.dist
+/dist
+/.astro
+.env
 .DS_Store
-.env*
-astro
-.vercel
-.netlify
-.astro
-# build artefacts – werden von Actions erzeugt
-dist/
-docs/
-sitemap*.xml
-
-# build artefacts – werden von Actions erzeugt
-dist/
-docs/
-sitemap*.xml
-
-# build artefacts – werden von Actions erzeugt
-dist/
-docs/
-sitemap*.xml

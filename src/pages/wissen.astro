@@ -1,19 +1,89 @@
 ---
-import meta from '../../content/seo/wissen.json';
-import PageLayout from '../layouts/PageLayout.astro';
----
+import BaseLayout from '../layouts/BaseLayout.astro';
+import seo from '../../content/seo/wissen.json';
 
-<PageLayout
-  title={meta.title}
-  description={meta.description}
-  canonical={meta.canonical}
-  breadcrumb={[
-    { name: 'Start', url: 'https://the-jungle-growshop-dortmund.github.io/' },
-    { name: 'Wissen & Downloads', url: meta.canonical }
-  ]}
->
-  <h1 class="font-display text-3xl text-text-high">Wissen &amp; Downloads</h1>
-  <p class="mt-4 max-w-3xl text-text-dim">
-    Feeding-Charts, Manuals, SOPs – kompakt &amp; filterbar (Setup folgt).
-  </p>
-</PageLayout>
+const breadcrumbs = [
+  { name: 'Startseite', href: '/' },
+  { name: 'Wissen', href: '/wissen/' },
+];
+
+const guides = [
+  {
+    title: 'Klimakontrolle leicht gemacht',
+    description:
+      'Wie du Temperatur, Luftfeuchte und Luftbewegung ausbalancierst – inklusive Troubleshooting für jede Jahreszeit.',
+  },
+  {
+    title: 'Nachhaltiges Düngen',
+    description:
+      'Mit organischen Nährstoffen, Tees und Kompost zu vitalen Pflanzen – plus Tipps zur Substrat-Wiederverwendung.',
+  },
+  {
+    title: 'Lichtplanung für Indoor-Gärten',
+    description:
+      'Lux, PPFD und Photoperioden verstehen: Wir zeigen, welche Lampe zu deinen Flächen und Pflanzen passt.',
+  },
+  {
+    title: 'Hydroponik für Einsteiger:innen',
+    description:
+      'Die wichtigsten Systeme im Vergleich und wie du sie wartest, ohne dass deine Pflanzen Stress bekommen.',
+  },
+];
+---
+<BaseLayout seo={seo} breadcrumbs={breadcrumbs}>
+  <section class="bg-slate-950/60">
+    <div class="mx-auto max-w-6xl space-y-6 px-4 py-16 sm:px-6">
+      <h1 class="text-4xl font-heading text-brand-light">Grow-Wissen aus Dortmund</h1>
+      <p class="text-lg text-slate-300">
+        Wir sammeln Best Practices aus unserem Laden, Workshops und der Community. In unserem Wissen-Bereich findest du
+        praxisnahe Guides, Schritt-für-Schritt-Anleitungen und Video-Tutorials.
+      </p>
+      <div class="grid gap-6 sm:grid-cols-2">
+        {guides.map((guide) => (
+          <article class="rounded-3xl border border-white/5 bg-white/5 p-6" key={guide.title}>
+            <h2 class="text-2xl font-heading text-white">{guide.title}</h2>
+            <p class="mt-3 text-sm text-slate-300">{guide.description}</p>
+            <a class="mt-4 inline-flex items-center gap-2 text-brand-light" href="#">
+              Mehr erfahren →
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:grid-cols-[2fr,1fr] sm:px-6">
+      <div class="space-y-4">
+        <h2 class="text-3xl font-heading text-brand-light">Wissen live erleben</h2>
+        <p class="text-sm text-slate-300">
+          Komm zu unseren monatlichen Workshops und tausche dich mit Gleichgesinnten aus. Von Urban Gardening in der Stadt
+          bis hin zu professionellen Indoor-Grows – wir zeigen dir die neuesten Trends.
+        </p>
+        <ul class="space-y-2 text-sm text-slate-300">
+          <li>🎓 Praxisnahe Sessions mit unseren Expert:innen</li>
+          <li>🎥 Video-Mitschnitte für alle Teilnehmer:innen</li>
+          <li>🗂️ Handouts und Checklisten zum Mitnehmen</li>
+        </ul>
+      </div>
+      <aside class="space-y-4 rounded-3xl border border-white/5 bg-white/5 p-6">
+        <h3 class="text-xl font-heading text-brand-light">Newsletter</h3>
+        <p class="text-sm text-slate-300">
+          Keine neuen Guides verpassen? Trag dich ein und wir schicken monatlich Updates direkt in dein Postfach.
+        </p>
+        <form class="space-y-3">
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="deine@email.de"
+            class="w-full rounded-full border border-white/10 bg-slate-950/80 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-brand-light focus:outline-none"
+          />
+          <button type="submit" class="w-full rounded-full bg-brand-light px-6 py-3 text-sm font-semibold text-slate-900 transition hover:bg-emerald-300">
+            Anmelden
+          </button>
+        </form>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

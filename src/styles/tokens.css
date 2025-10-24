@@ -1,8 +1,0 @@
-:root{
-  --accent-primary:#FFFFFF; --accent-alt-moss:#0FA958;
-  --bg-dark:#0A0A0A; --text-high:#F3F4F6; --text-dim:#A3A3A3;
-  --glass-bg:rgba(255,255,255,.04); --glass-border:rgba(255,255,255,.12);
-  --glow-primary:0 0 32px rgba(255,255,255,.08); --glow-alt:0 0 40px rgba(15,169,88,.20);
-  --radius-lg:16px; --radius-xl:24px; --shadow-card:0 8px 30px rgba(0,0,0,.35);
-  color-scheme: dark;
-}

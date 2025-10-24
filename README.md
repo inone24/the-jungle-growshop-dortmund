@@ -1,28 +1,46 @@
-# The Jungle Growshop Dortmund
+# The Jungle Growshop Dortmund — Astro SSG
 
-Static storefront for The Jungle Growshop Dortmund built with [Astro](https://astro.build) and [Tailwind CSS](https://tailwindcss.com).
+Static, fast, SEO-friendly site for a local growshop. Built with Astro + Tailwind.
 
-## Local development
-
-```bash
-pnpm install
-pnpm dev
-```
-
-## Production build
+## Scripts
 
 ```bash
-pnpm build
+pnpm dev       # dev server
+pnpm build     # static build -> /dist
+pnpm preview   # preview /dist
+pnpm lint      # eslint
+pnpm format    # prettier
+pnpm typecheck # typescript
 ```
 
-The generated site is emitted to `dist/` and can be previewed locally with `pnpm preview`.
+## Content
 
-## Continuous integration
+- `content/global.json` – Stammdaten, Öffnungszeiten, Zahlarten
+- `content/seo/*.json` – Title, Description, Canonical pro Route
 
-GitHub Actions runs `pnpm build` on every push and pull request using Node.js 22 and pnpm 8.15.5. The compiled output is attached as an artifact for quick inspection.
+## Pages
 
-## GitHub Pages deployment
+- `/` Home
+- `/growshop_dortmund/`
+- `/produkte/`
+- `/wissen/`
+- `/standort/`
+- `/kontakt/`
+- `/team/`
+- `/impressum/`, `/datenschutz/`
 
-1. Enable **GitHub Pages** in the repository settings and choose **GitHub Actions** as the source.
-2. Ensure the `Deploy Pages` workflow has run successfully on the `main` branch. It uploads the `dist/` folder via `actions/upload-pages-artifact` and publishes it with `actions/deploy-pages`.
-3. The published site will be available at `https://<username>.github.io/the-jungle-growshop-dortmund/` (or your configured custom domain).
+## SEO
+
+- `<title>`, `<meta description>`, canonical, OG/Twitter
+- JSON-LD via `SchemaScript.astro` (LocalBusiness, Breadcrumb)
+- `@astrojs/sitemap`, `robots.txt`, `manifest.webmanifest`
+
+## Deploy (GitHub Pages)
+
+Workflows unter `.github/workflows` (noch ausstehend). In Repo Settings ▸ Pages: Build and deployment → GitHub Actions.
+
+## Notes
+
+- In Produktion bleibt der Head clean (keine Dev-Injektionen).
+- Fonts nutzen System-Fallbacks; self-hosted WOFF2 kann leicht ergänzt werden.
+- Der Content ist bewusst textlastig, damit Suchmaschinen lokale Relevanz erkennen.

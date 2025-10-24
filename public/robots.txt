@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://the-jungle-growshop-dortmund.github.io/sitemap-index.xml
+Sitemap: https://the-jungle-growshop-dortmund.de/sitemap-index.xml

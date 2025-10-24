@@ -1,23 +1,30 @@
-/** @type {import('eslint').Linter.Config} */
 module.exports = {
   root: true,
-  env: { browser: true, es2022: true, node: true },
-  parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'astro'],
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:astro/recommended',
-    'eslint-config-prettier'
-  ],
+  extends: ['eslint:recommended', 'plugin:astro/recommended'],
+  env: {
+    es2022: true,
+    browser: true,
+    node: true,
+  },
   overrides: [
     {
       files: ['*.astro'],
       parser: 'astro-eslint-parser',
-      parserOptions: { parser: '@typescript-eslint/parser' }
-    }
+      parserOptions: {
+        parser: '@typescript-eslint/parser',
+        extraFileExtensions: ['.astro'],
+        ecmaVersion: 2022,
+        sourceType: 'module',
+      },
+    },
+    {
+      files: ['*.ts'],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        ecmaVersion: 2022,
+        sourceType: 'module',
+      },
+    },
   ],
-  rules: {
-    'no-console': 'warn'
-  }
+  ignorePatterns: ['dist', '.astro', 'node_modules'],
 };

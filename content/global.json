@@ -1,10 +1,38 @@
 {
-  "brand": "The Jungle Growshop Dortmund",
-  "address": "Eberstr. 18, 44145 Dortmund",
-  "phone_display": "0231 95094526",
-  "phone_link": "tel:+4923195094526",
-  "email": "kontakt@growthejungle.de",
-  "hours": "Mo–Sa 10–20 Uhr",
-  "payments": ["Bar", "Girocard", "Visa", "Mastercard", "Apple Pay", "Google Pay"],
-  "transport": ["Parkplätze in der Nähe", "VRR/DSW21 fußläufig"]
+  "siteUrl": "https://the-jungle-growshop-dortmund.de",
+  "businessName": "The Jungle Growshop Dortmund",
+  "legalName": "The Jungle Growshop Dortmund Inh. Max Mustermann",
+  "tagline": "Dein Head- und Growshop im Herzen von Dortmund",
+  "address": {
+    "street": "Kampstraße 35",
+    "postalCode": "44137",
+    "city": "Dortmund",
+    "country": "Deutschland"
+  },
+  "contact": {
+    "phone": "+49 231 1234567",
+    "email": "hello@the-jungle-growshop.de"
+  },
+  "openingHours": [
+    "Montag–Freitag: 10:00 – 19:00 Uhr",
+    "Samstag: 10:00 – 16:00 Uhr"
+  ],
+  "paymentMethods": [
+    "Barzahlung",
+    "EC-Karte",
+    "Kreditkarte",
+    "Kontaktlos"
+  ],
+  "publicTransport": [
+    "U-Bahn U41/U45/U46 – Haltestelle Stadtgarten",
+    "Buslinie 452 – Haltestelle Kampstraße"
+  ],
+  "socials": {
+    "instagram": "https://www.instagram.com/thejungle_dortmund",
+    "facebook": "https://www.facebook.com/thejungledortmund"
+  },
+  "geo": {
+    "latitude": 51.5136,
+    "longitude": 7.4653
+  }
 }
