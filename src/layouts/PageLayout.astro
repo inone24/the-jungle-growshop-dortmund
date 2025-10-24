@@ -1,16 +1,16 @@
 ---
-import BaseLayout from './BaseLayout.astro';
-import SchemaScript from '../components/SchemaScript.astro';
+// src/layouts/PageLayout.astro
+import BaseLayout from "./BaseLayout.astro";
 
-interface Props {
+type Breadcrumb = { name: string; url: string };
+export interface PageMeta {
   title: string;
   description: string;
   canonical: string;
   ogTitle?: string;
-  ogDescription?: string;
   ogImage?: string;
-  breadcrumb?: { name: string; url: string }[];
-  faq?: { question: string; answer: string }[];
+  faq?: { q: string; a: string }[];
+  breadcrumbs?: Breadcrumb[];
 }
 
 const {
@@ -18,32 +18,38 @@ const {
   description,
   canonical,
   ogTitle = title,
-  ogDescription = description,
-  ogImage = '/og-cover.png',
-  breadcrumb = [],
-  faq = []
-} = Astro.props as Props;
+  ogImage = "/og_image.jpg",
+  faq = [],
+  breadcrumbs = []
+} = Astro.props as PageMeta;
 
-const canonicalUrl = canonical.trim();
+const canonicalUrl = (canonical ?? "").trim();
 ---
-
 <BaseLayout>
-  <Fragment slot="head">
+  <fragment slot="head">
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
-    <link rel="alternate" hrefLang="de" href={canonicalUrl} />
+    <link rel="alternate" hreflang="de" href={canonicalUrl} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={ogTitle} />
-    <meta property="og:description" content={ogDescription} />
+    <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content="The Jungle Growshop Dortmund" />
-    <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={ogTitle} />
-    <meta name="twitter:description" content={ogDescription} />
-    <SchemaScript pageUrl={canonicalUrl} breadcrumb={breadcrumb} faq={faq} ogImage={ogImage} />
-  </Fragment>
+    <meta name="twitter:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <!-- JSON-LD aus eigenem Component, schreibt echtes JSON -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "The Jungle Growshop Dortmund",
+      "url": canonicalUrl,
+      "telephone": "0231 95094526",
+      "address": { "@type": "PostalAddress", "streetAddress": "Eberstr. 18", "addressLocality":"Dortmund", "postalCode":"44145", "addressCountry":"DE" }
+    })}></script>
+  </fragment>
 
   <main id="main" class="mx-auto max-w-6xl px-6 pb-24 pt-16">
     <slot />
