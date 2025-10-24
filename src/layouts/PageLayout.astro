@@ -1,0 +1,51 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import SchemaScript from '../components/SchemaScript.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  breadcrumb?: { name: string; url: string }[];
+  faq?: { question: string; answer: string }[];
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogTitle = title,
+  ogDescription = description,
+  ogImage = '/og-cover.png',
+  breadcrumb = [],
+  faq = []
+} = Astro.props as Props;
+
+const canonicalUrl = canonical.trim();
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hrefLang="de" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="The Jungle Growshop Dortmund" />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={ogDescription} />
+    <SchemaScript pageUrl={canonicalUrl} breadcrumb={breadcrumb} faq={faq} ogImage={ogImage} />
+  </Fragment>
+
+  <main id="main" class="mx-auto max-w-6xl px-6 pb-24 pt-16">
+    <slot />
+  </main>
+</BaseLayout>

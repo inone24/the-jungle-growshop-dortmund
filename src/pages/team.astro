@@ -1,0 +1,19 @@
+---
+import meta from '../../content/seo/team.json';
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  breadcrumb={[
+    { name: 'Start', url: 'https://the-jungle-growshop-dortmund.github.io/' },
+    { name: 'Team', url: meta.canonical }
+  ]}
+>
+  <h1 class="font-display text-3xl text-text-high">Team</h1>
+  <p class="mt-4 max-w-3xl text-text-dim">
+    Deine Crew für saubere Setups – Fachberatung &amp; Klartext.
+  </p>
+</PageLayout>
