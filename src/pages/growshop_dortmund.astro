@@ -4,6 +4,9 @@ import meta from '../../content/seo/growshop.json';
 import global from '../../content/global.json';
 
 const canonicalUrl = (meta.canonical ?? '').trim();
+const rawBase = import.meta.env.BASE_URL;
+const basePath = rawBase === '/' ? '' : rawBase.replace(/\/$/, '');
+const withBase = (path: string) => `${basePath}${path}`;
 
 const breadcrumb = [
   { name: 'Start', url: 'https://inone24.github.io/the-jungle-growshop-dortmund/' },
@@ -51,13 +54,13 @@ const faq = [
       <div class="mt-6 flex flex-wrap justify-center gap-3">
         <a
           class="rounded-full bg-accent-moss/10 px-5 py-2 text-sm font-semibold text-accent-primary shadow-[var(--glow-alt)] transition hover:bg-accent-moss/20 focus-ring"
-          href="/kontakt/"
+          href={withBase('/kontakt/')}
         >
           Beratung &amp; Kauf
         </a>
         <a
           class="rounded-full border border-accent-moss/40 px-5 py-2 text-sm font-semibold text-accent-primary transition hover:border-accent-moss/60 focus-ring"
-          href="/standort/"
+          href={withBase('/standort/')}
         >
           Route starten
         </a>
@@ -178,15 +181,15 @@ const faq = [
           ))}
         </div>
         <a
-          href="/standort/"
+          href={withBase('/standort/')}
           class="mt-4 block overflow-hidden rounded-xl border border-white/10 transition hover:shadow-[var(--glow-primary)] focus-ring"
         >
-          <img src="/map-preview.svg" alt="Karte The Jungle Growshop Dortmund" loading="lazy" class="w-full" />
+          <img src={withBase('/map-preview.svg')} alt="Karte The Jungle Growshop Dortmund" loading="lazy" class="w-full" />
         </a>
         <div class="mt-4 flex flex-wrap gap-2">
           <a
             class="rounded-full bg-accent-moss/10 px-4 py-2 text-sm font-semibold text-accent-primary shadow-[var(--glow-alt)] transition hover:bg-accent-moss/20 focus-ring"
-            href="/standort/"
+            href={withBase('/standort/')}
           >
             Route planen
           </a>
@@ -207,13 +210,13 @@ const faq = [
         <div class="mt-6 flex flex-wrap gap-3">
           <a
             class="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-text-high transition hover:border-white/40 focus-ring"
-            href="/team/"
+            href={withBase('/team/')}
           >
             Team ansehen
           </a>
           <a
             class="rounded-full bg-white px-4 py-2 text-sm font-semibold text-background-dark transition hover:bg-white/90 focus-ring"
-            href="/kontakt/"
+            href={withBase('/kontakt/')}
           >
             Nachricht senden
           </a>
@@ -233,7 +236,9 @@ const faq = [
           </summary>
           <div class="pt-2 text-sm text-text-dim">
             High-End Bar-Systeme ~250–350 W liefern das passende PPFD-Niveau. Mit Dimmer, Controller und Nachtabsenkung kannst du den Verlauf feinjustieren.
-            <a class="ml-1 underline" href="/produkte/pflanzenbeleuchtung/">Mehr zu LED Grow Lampen</a>.
+            <a class="ml-1 underline" href={withBase('/produkte/pflanzenbeleuchtung/')}>
+              Mehr zu LED Grow Lampen
+            </a>.
           </div>
         </details>
         <details class="glass-panel rounded-xl p-4">
@@ -242,7 +247,7 @@ const faq = [
           </summary>
           <div class="pt-2 text-sm text-text-dim">
             Volumen × Luftwechsel + Reserve für Filter &amp; Bögen. Wir rechnen es im Laden oder nutze den AKF-Rechner auf
-            <a class="ml-1 underline" href="/produkte/lueftung/">Lüftung &amp; Klima</a>.
+            <a class="ml-1 underline" href={withBase('/produkte/lueftung/')}>Lüftung &amp; Klima</a>.
           </div>
         </details>
         <details class="glass-panel rounded-xl p-4">
@@ -251,7 +256,7 @@ const faq = [
           </summary>
           <div class="pt-2 text-sm text-text-dim">
             Anzucht ca. 0,4–1,0 mS/cm, Vegetation 1,2–2,0 mS/cm, Blüte 1,6–2,4 mS/cm. Halte den pH je nach Medium stabil: Erde 6,2–6,8 · Coco 5,8–6,2 · Hydro 5,5–6,0.
-            <a class="ml-1 underline" href="/produkte/duenger/">Nährstoff-Guide</a>.
+            <a class="ml-1 underline" href={withBase('/produkte/duenger/')}>Nährstoff-Guide</a>.
           </div>
         </details>
         <details class="glass-panel rounded-xl p-4">
@@ -260,7 +265,7 @@ const faq = [
           </summary>
           <div class="pt-2 text-sm text-text-dim">
             Nicht zwingend – für Komplett-Sets empfehlen wir 20–30 Minuten Slot.
-            <a class="ml-1 underline" href="/kontakt/">Jetzt vereinbaren →</a>
+            <a class="ml-1 underline" href={withBase('/kontakt/')}>Jetzt vereinbaren →</a>
           </div>
         </details>
       </div>

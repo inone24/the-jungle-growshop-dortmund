@@ -1,6 +1,10 @@
 ---
 import meta from '../../content/seo/standort.json';
 import PageLayout from '../layouts/PageLayout.astro';
+
+const rawBase = import.meta.env.BASE_URL;
+const basePath = rawBase === '/' ? '' : rawBase.replace(/\/$/, '');
+const withBase = (path: string) => `${basePath}${path}`;
 ---
 
 <PageLayout
@@ -18,7 +22,7 @@ import PageLayout from '../layouts/PageLayout.astro';
   </p>
   <img
     class="mt-6 rounded-xl border border-white/10"
-    src="/map-preview.svg"
+    src={withBase('/map-preview.svg')}
     alt="Karte The Jungle Growshop Dortmund"
     loading="lazy"
   />

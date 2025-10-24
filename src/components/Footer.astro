@@ -2,6 +2,9 @@
 import global from '../../content/global.json';
 
 const year = new Date().getFullYear();
+const rawBase = import.meta.env.BASE_URL;
+const basePath = rawBase === '/' ? '' : rawBase.replace(/\/$/, '');
+const withBase = (path: string) => `${basePath}${path}`;
 ---
 
 <footer class="mt-24 border-t border-white/5 bg-[rgba(10,10,10,0.95)]">
@@ -14,7 +17,12 @@ const year = new Date().getFullYear();
       {global.transport.map((transport) => (
         <span class="glass-panel inline-flex items-center rounded-full px-3 py-1">{transport}</span>
       ))}
-      <span class="glass-panel inline-flex items-center rounded-full px-3 py-1">🧭 Route starten</span>
+      <span class="glass-panel inline-flex items-center rounded-full px-3 py-1">
+        🧭
+        <a class="ml-1 hover:text-accent-primary" href={withBase('/standort/')}>
+          Route starten
+        </a>
+      </span>
     </div>
 
     <div class="grid gap-10 md:grid-cols-[1.2fr_1fr_1fr_1fr]">
@@ -22,13 +30,15 @@ const year = new Date().getFullYear();
         <h2 class="font-display text-lg text-accent-primary">Filiale Dortmund</h2>
         <p class="mt-2 text-sm text-text-dim">{global.address}</p>
         <img
-          src="/map-preview.svg"
+          src={withBase('/map-preview.svg')}
           alt="Stilisierte Karte mit Markierung für den Jungle Growshop in Dortmund"
           class="mt-4 w-full rounded-lg border border-white/10"
           loading="lazy"
         />
         <div class="mt-4 flex flex-wrap gap-2 text-sm">
-          <a class="rounded-full bg-accent-moss/10 px-4 py-2 text-accent-primary" href="/standort/">Route</a>
+          <a class="rounded-full bg-accent-moss/10 px-4 py-2 text-accent-primary" href={withBase('/standort/')}>
+            Route
+          </a>
           <a
             class="rounded-full border border-accent-moss/40 px-4 py-2 text-accent-primary"
             href={global.phone_link}
@@ -57,17 +67,17 @@ const year = new Date().getFullYear();
       <section>
         <h2 class="font-display text-base text-text-high">Produkte</h2>
         <ul class="mt-4 space-y-2 text-sm text-text-dim">
-          <li><a href="/produkte/" class="hover:text-accent-primary">Übersicht</a></li>
+          <li><a href={withBase('/produkte/')} class="hover:text-accent-primary">Übersicht</a></li>
           <li>
-            <a href="/produkte/pflanzenbeleuchtung/" class="hover:text-accent-primary">
+            <a href={withBase('/produkte/pflanzenbeleuchtung/')} class="hover:text-accent-primary">
               Pflanzenbeleuchtung
             </a>
           </li>
           <li>
-            <a href="/produkte/lueftung/" class="hover:text-accent-primary">Lüftung &amp; Klima</a>
+            <a href={withBase('/produkte/lueftung/')} class="hover:text-accent-primary">Lüftung &amp; Klima</a>
           </li>
           <li>
-            <a href="/produkte/duenger/" class="hover:text-accent-primary">Dünger &amp; Nährstoffe</a>
+            <a href={withBase('/produkte/duenger/')} class="hover:text-accent-primary">Dünger &amp; Nährstoffe</a>
           </li>
         </ul>
       </section>
@@ -76,10 +86,10 @@ const year = new Date().getFullYear();
         <h2 class="font-display text-base text-text-high">Infos</h2>
         <ul class="mt-4 space-y-2 text-sm text-text-dim">
           <li>
-            <a href="/wissen/" class="hover:text-accent-primary">Wissen &amp; Downloads</a>
+            <a href={withBase('/wissen/')} class="hover:text-accent-primary">Wissen &amp; Downloads</a>
           </li>
-          <li><a href="/standort/" class="hover:text-accent-primary">Standort</a></li>
-          <li><a href="/team/" class="hover:text-accent-primary">Team</a></li>
+          <li><a href={withBase('/standort/')} class="hover:text-accent-primary">Standort</a></li>
+          <li><a href={withBase('/team/')} class="hover:text-accent-primary">Team</a></li>
         </ul>
       </section>
     </div>
@@ -88,9 +98,9 @@ const year = new Date().getFullYear();
   <div class="border-t border-white/5 bg-black/30 py-4 text-center text-xs text-text-dim">
     <span>© {year} {global.brand}</span>
     <span class="mx-3">·</span>
-    <a href="/impressum/" class="hover:text-accent-primary">Impressum</a>
+    <a href={withBase('/impressum/')} class="hover:text-accent-primary">Impressum</a>
     <span class="mx-3">·</span>
-    <a href="/datenschutz/" class="hover:text-accent-primary">Datenschutz</a>
+    <a href={withBase('/datenschutz/')} class="hover:text-accent-primary">Datenschutz</a>
     <span class="mx-3">·</span>
     <span>Keine Heilsversprechen; nur legale Anwendungen</span>
   </div>

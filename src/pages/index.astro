@@ -1,6 +1,10 @@
 ---
 import meta from '../../content/seo/home.json';
 import PageLayout from '../layouts/PageLayout.astro';
+
+const rawBase = import.meta.env.BASE_URL;
+const basePath = rawBase === '/' ? '' : rawBase.replace(/\/$/, '');
+const withBase = (path: string) => `${basePath}${path}`;
 ---
 
 <PageLayout
@@ -18,14 +22,18 @@ import PageLayout from '../layouts/PageLayout.astro';
       dimensionieren Leistung, Luftwechsel &amp; VPD mit dir am Tresen.
     </p>
     <div class="mt-6 flex justify-center gap-3">
-      <a class="rounded-full bg-accent-moss/10 px-5 py-2 text-accent-primary focus-ring" href="/kontakt/"
-        >Beratung &amp; Kauf</a
+      <a
+        class="rounded-full bg-accent-moss/10 px-5 py-2 text-accent-primary focus-ring"
+        href={withBase('/kontakt/')}
       >
+        Beratung &amp; Kauf
+      </a>
       <a
         class="rounded-full border border-accent-moss/40 px-5 py-2 text-accent-primary focus-ring"
-        href="/standort/"
-        >Route starten</a
+        href={withBase('/standort/')}
       >
+        Route starten
+      </a>
     </div>
   </section>
 </PageLayout>

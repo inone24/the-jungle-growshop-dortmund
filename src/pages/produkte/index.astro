@@ -1,6 +1,10 @@
 ---
 import meta from '../../../content/seo/produkte.json';
 import PageLayout from '../../layouts/PageLayout.astro';
+
+const rawBase = import.meta.env.BASE_URL;
+const basePath = rawBase === '/' ? '' : rawBase.replace(/\/$/, '');
+const withBase = (path: string) => `${basePath}${path}`;
 ---
 
 <PageLayout
@@ -18,7 +22,7 @@ import PageLayout from '../../layouts/PageLayout.astro';
   </p>
   <div class="mt-10 grid gap-6 md:grid-cols-2">
     <a
-      href="/produkte/pflanzenbeleuchtung/"
+      href={withBase('/produkte/pflanzenbeleuchtung/')}
       class="glass-panel flex h-full flex-col justify-between rounded-2xl p-6 shadow-card transition hover:shadow-[var(--glow-primary)]"
     >
       <div>
@@ -27,7 +31,7 @@ import PageLayout from '../../layouts/PageLayout.astro';
       </div>
     </a>
     <a
-      href="/produkte/lueftung/"
+      href={withBase('/produkte/lueftung/')}
       class="glass-panel flex h-full flex-col justify-between rounded-2xl p-6 shadow-card transition hover:shadow-[var(--glow-primary)]"
     >
       <div>
