@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import seo from '../../../content/seo/growshop.json';
+
+const breadcrumbs = [
+  { name: 'Startseite', href: '/' },
+  { name: 'Growshop', href: '/growshop_dortmund/' },
+];
+---
+<BaseLayout seo={seo} breadcrumbs={breadcrumbs}>
+  <section class="bg-slate-950/60">
+    <div class="mx-auto max-w-6xl space-y-6 px-4 py-16 sm:px-6">
+      <h1 class="text-4xl font-heading text-brand-light">Alles für deinen Grow in Dortmund</h1>
+      <p class="text-lg text-slate-300">
+        Von der Stecklingsphase bis zur Ernte: Wir begleiten dein Projekt mit kuratiertem Equipment, ehrlicher Beratung
+        und einem riesigen Erfahrungsschatz aus der lokalen Community.
+      </p>
+      <div class="grid gap-6 sm:grid-cols-3">
+        <article class="rounded-2xl border border-white/5 bg-white/5 p-6">
+          <h2 class="text-xl font-semibold text-white">Beratung im Store</h2>
+          <p class="mt-3 text-sm text-slate-300">
+            Bring Fotos, Skizzen oder deine Fragen mit: Gemeinsam entwickeln wir Setups für jede Raumgröße und jedes Budget.
+          </p>
+        </article>
+        <article class="rounded-2xl border border-white/5 bg-white/5 p-6">
+          <h2 class="text-xl font-semibold text-white">Werkstatt & Reparatur</h2>
+          <p class="mt-3 text-sm text-slate-300">
+            Wir testen, warten und reparieren dein Equipment. So bleibt deine Technik effizient und langlebig.
+          </p>
+        </article>
+        <article class="rounded-2xl border border-white/5 bg-white/5 p-6">
+          <h2 class="text-xl font-semibold text-white">Workshops & Events</h2>
+          <p class="mt-3 text-sm text-slate-300">
+            Monatliche Workshops zu Themen wie Klimasteuerung, biologischer Pflanzenschutz und Hydroponik.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:grid-cols-2 sm:px-6">
+      <div class="space-y-4">
+        <h2 class="text-3xl font-heading text-brand-light">Service für alle Skill-Levels</h2>
+        <ul class="space-y-2 text-sm text-slate-300">
+          <li>✅ Starter-Sets zum fairen Preis</li>
+          <li>✅ Individuelle Planung für Indoor- und Outdoor-Flächen</li>
+          <li>✅ Klima- und Bewässerungslösungen für Profis</li>
+          <li>✅ Support bei Förderprogrammen und urbanen Gemeinschaftsgärten</li>
+        </ul>
+      </div>
+      <div class="space-y-4 rounded-3xl border border-white/5 bg-white/5 p-6">
+        <h3 class="text-xl font-heading text-brand-light">Bring dein Projekt mit</h3>
+        <p class="text-sm text-slate-300">
+          Wir lieben Herausforderungen! Zeig uns deinen Raumplan oder deine Idee, wir helfen bei Kalkulation, Genehmigungen
+          und der passenden Technik.
+        </p>
+        <a href="/kontakt/" class="inline-flex items-center gap-2 text-brand-light">
+          Termin vereinbaren →
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

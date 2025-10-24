@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import seo from '../../content/seo/standort.json';
+import global from '../../content/global.json';
+import type { GlobalContent } from '../types';
+
+const globalData = global as GlobalContent;
+
+const breadcrumbs = [
+  { name: 'Startseite', href: '/' },
+  { name: 'Standort', href: '/standort/' },
+];
+
+const mapEmbed = `https://www.openstreetmap.org/export/embed.html?bbox=${globalData.geo.longitude - 0.01}%2C${globalData.geo.latitude - 0.01}%2C${globalData.geo.longitude + 0.01}%2C${globalData.geo.latitude + 0.01}&layer=mapnik&marker=${globalData.geo.latitude}%2C${globalData.geo.longitude}`;
+---
+<BaseLayout seo={seo} breadcrumbs={breadcrumbs}>
+  <section class="bg-slate-950/60">
+    <div class="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:grid-cols-2 sm:px-6">
+      <div class="space-y-5">
+        <h1 class="text-4xl font-heading text-brand-light">Besuch uns im Herzen Dortmunds</h1>
+        <p class="text-lg text-slate-300">
+          Unser Store liegt wenige Minuten vom Dortmunder Hauptbahnhof entfernt. Dank U-Bahn und Bus bist du schnell bei uns –
+          und mit Parkplätzen direkt um die Ecke kommst du auch mit dem Auto entspannt vorbei.
+        </p>
+        <div class="space-y-2 text-sm text-slate-300">
+          <p><strong>Adresse:</strong> {globalData.address.street}, {globalData.address.postalCode} {globalData.address.city}</p>
+          <p><strong>Telefon:</strong> <a href={`tel:${globalData.contact.phone.replace(/\s+/g, '')}`}>{globalData.contact.phone}</a></p>
+          <p><strong>Email:</strong> <a href={`mailto:${globalData.contact.email}`}>{globalData.contact.email}</a></p>
+          <p><strong>ÖPNV:</strong> {globalData.publicTransport.join(' · ')}</p>
+        </div>
+        <div>
+          <h2 class="text-xl font-heading text-brand-light">Parken & Lieferung</h2>
+          <p class="mt-2 text-sm text-slate-300">
+            Kurzzeitparkplätze findest du entlang der Kampstraße. Größere Bestellungen liefern wir auf Wunsch im Raum Dortmund
+            direkt zu dir nach Hause oder ins Gewächshaus.
+          </p>
+        </div>
+      </div>
+      <div class="overflow-hidden rounded-3xl border border-white/10">
+        <iframe
+          title="Karte vom The Jungle Growshop Dortmund"
+          src={mapEmbed}
+          class="h-[400px] w-full"
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="mx-auto max-w-6xl space-y-6 px-4 py-16 sm:px-6">
+      <h2 class="text-3xl font-heading text-brand-light">Dein Besuch bei uns</h2>
+      <div class="grid gap-6 sm:grid-cols-3">
+        <article class="rounded-2xl border border-white/5 bg-white/5 p-6">
+          <h3 class="text-xl font-semibold text-white">Click & Collect</h3>
+          <p class="mt-3 text-sm text-slate-300">
+            Bestell telefonisch oder per Mail und hol deine Produkte fertig gepackt im Store ab.
+          </p>
+        </article>
+        <article class="rounded-2xl border border-white/5 bg-white/5 p-6">
+          <h3 class="text-xl font-semibold text-white">Private Beratung</h3>
+          <p class="mt-3 text-sm text-slate-300">
+            Du möchtest in Ruhe planen? Wir blocken dir gerne einen Slot außerhalb der regulären Öffnungszeiten.
+          </p>
+        </article>
+        <article class="rounded-2xl border border-white/5 bg-white/5 p-6">
+          <h3 class="text-xl font-semibold text-white">Vor-Ort-Service</h3>
+          <p class="mt-3 text-sm text-slate-300">
+            Auf Wunsch kommen wir zu dir, prüfen Setups und geben Optimierungstipps direkt am Projekt.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
