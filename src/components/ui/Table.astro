@@ -1,0 +1,8 @@
+---
+const { className = "" } = Astro.props as { className?: string };
+---
+<div class="relative w-full overflow-auto">
+  <table class={`w-full caption-bottom text-sm ${className}`}>
+    <slot />
+  </table>
+</div>

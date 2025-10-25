@@ -1,0 +1,8 @@
+---
+import type { StructuredData } from '../types';
+const { data } = Astro.props as { data: StructuredData | StructuredData[] };
+const scripts = Array.isArray(data) ? data.filter(Boolean) : [data].filter(Boolean);
+---
+{scripts.map((item) => (
+  <script type="application/ld+json" set:html={JSON.stringify(item)} />
+))}

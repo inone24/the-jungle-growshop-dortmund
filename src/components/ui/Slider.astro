@@ -1,0 +1,24 @@
+---
+import SliderIsland from "@/islands/ui/Slider.client";
+
+const { name = "slider", value = 50, min = 0, max = 100, step = 1, className = "" } = Astro.props as {
+  name?: string;
+  value?: number;
+  min?: number;
+  max?: number;
+  step?: number;
+  className?: string;
+};
+---
+<noscript>
+  <input type="range" name={name} min={min} max={max} step={step} value={value} class="w-full" />
+</noscript>
+<SliderIsland
+  client:visible
+  name={name}
+  defaultValue={value}
+  min={min}
+  max={max}
+  step={step}
+  className={className}
+/>

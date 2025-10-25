@@ -1,0 +1,127 @@
+/* zentrale UI-Utilities */
+.ui-glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(24px);
+  box-shadow: var(--glow-primary);
+}
+
+.ui-popover {
+  background: rgba(0, 0, 0, 0.85);
+  color: var(--text-high);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.75rem;
+}
+
+.ui-backdrop {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.ui-chip {
+  @apply inline-flex items-center rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-white/80;
+}
+
+/* OTP caret blink */
+@keyframes caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.1;
+  }
+}
+
+.animate-caret-blink {
+  animation: caret-blink 1s step-end infinite;
+}
+
+/* Aspect-Ratio fallback */
+.aspect-box {
+  position: relative;
+  width: 100%;
+}
+
+.aspect-box > .aspect-inner {
+  position: absolute;
+  inset: 0;
+}
+
+/* Progress */
+.progress-root {
+  position: relative;
+  height: 8px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.progress-indicator {
+  height: 100%;
+  background: #4a6741;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+/* Pagination */
+.pagination {
+  @apply mx-auto flex w-full justify-center;
+}
+
+.pagination-list {
+  @apply flex flex-row items-center gap-1;
+}
+
+.pagination-link {
+  @apply inline-flex items-center justify-center rounded-md border border-white/20 bg-white/5 px-3 py-2 text-sm text-white hover:bg-white/10;
+}
+
+.pagination-link-active {
+  @apply border-white/30 bg-white/10;
+}
+
+/* Slider */
+.slider-track {
+  @apply relative h-1.5 w-full grow overflow-hidden rounded-full bg-white/20;
+}
+
+.slider-range {
+  @apply absolute h-full bg-white/70;
+}
+
+.slider-thumb {
+  @apply block h-4 w-4 rounded-full border border-white/50 bg-black shadow transition;
+}
+
+/* Skeleton */
+.skeleton {
+  @apply animate-pulse rounded-md bg-white/10;
+}
+
+/* Textarea */
+.ui-textarea {
+  --bd: rgba(255, 255, 255, 0.15);
+  width: 100%;
+  min-height: 60px;
+  border: 1px solid var(--bd);
+  background: transparent;
+  color: var(--text-high);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.ui-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.ui-textarea:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25);
+}
+
+/* Toggle helper */
+.toggle {
+  @apply inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors;
+}

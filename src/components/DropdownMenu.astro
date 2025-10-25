@@ -1,0 +1,35 @@
+---
+import DropdownMenuIsland, { type Item } from "@/islands/DropdownMenu.client";
+import { withBase } from "@/lib/url";
+
+const base = import.meta.env.BASE_URL;
+const { items = [], label = "Menü" } = Astro.props as { items: Item[]; label?: string };
+
+const normalizedItems = items.map((item) => ({
+  ...item,
+  href: withBase(item.href, base),
+  children: item.children?.map((child) => ({
+    ...child,
+    href: withBase(child.href, base),
+  })),
+}));
+---
+<noscript>
+  <nav aria-label={label}>
+    <ul class="space-y-1">
+      {normalizedItems.map((it) => (
+        <li>
+          {it.href ? <a href={it.href}>{it.label}</a> : it.label}
+          {it.children?.length && (
+            <ul class="ml-4 list-disc">
+              {it.children.map((c) => (
+                <li><a href={c.href}>{c.label}</a></li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))}
+    </ul>
+  </nav>
+</noscript>
+<DropdownMenuIsland client:idle items={normalizedItems} label={label}/>

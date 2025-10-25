@@ -1,0 +1,6 @@
+---
+import HoverCardIsland from "@/islands/HoverCard.client";
+const { trigger = "Info", content = "", inlineFallback = true } = Astro.props as {trigger?:string; content?:string; inlineFallback?:boolean};
+---
+{inlineFallback && <span class="text-white/80">{trigger}: <span class="text-white/60">{content}</span></span>}
+<HoverCardIsland client:visible trigger={trigger} content={content} />

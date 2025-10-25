@@ -1,0 +1,39 @@
+---
+import NavigationMenuIsland from "@/islands/ui/NavigationMenu.client";
+import { withBase } from "@/lib/url";
+const base = import.meta.env.BASE_URL;
+const { groups = [] } = Astro.props as {
+  groups: { label: string; items: { label: string; href: string }[] }[];
+};
+
+const normalizedGroups = groups.map((group) => ({
+  ...group,
+  items: group.items.map((item) => ({
+    ...item,
+    href: withBase(item.href, base) ?? "#",
+  })),
+}));
+---
+<noscript>
+  <nav aria-label="Hauptnavigation">
+    <ul class="flex flex-wrap gap-3">
+      {normalizedGroups.map((group) => (
+        <li class="text-white/90">
+          <span class="font-semibold">{group.label}:</span>
+          <ul class="ml-2 inline-flex gap-2">
+            {group.items.map((item) => (
+              <li>
+                {item.href ? (
+                  <a href={item.href} class="hover:underline">{item.label}</a>
+                ) : (
+                  item.label
+                )}
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</noscript>
+<NavigationMenuIsland client:idle groups={normalizedGroups} />

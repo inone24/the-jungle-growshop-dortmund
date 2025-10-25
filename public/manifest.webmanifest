@@ -1,0 +1,16 @@
+{
+  "name": "The Jungle Growshop Dortmund",
+  "short_name": "Jungle",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f3d2e",
+  "theme_color": "#0f3d2e",
+  "lang": "de",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512"
+    }
+  ]
+}
