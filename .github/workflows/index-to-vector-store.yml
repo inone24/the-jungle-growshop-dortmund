@@ -1,0 +1,52 @@
+name: Index repo to Vector Store
+
+on:
+  push:
+    branches: [ main, "feature/**", "codex/**", "hotfix/**" ]
+  workflow_dispatch: {}
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install OpenAI CLI
+        run: npm -g i openai
+
+      - name: Upload changed files to Vector Store
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_PROJECT: ${{ secrets.OPENAI_PROJECT }}
+          OPENAI_VECTOR_STORE_ID: ${{ secrets.OPENAI_VECTOR_STORE_ID }}
+        run: |
+          if [ -z "$OPENAI_VECTOR_STORE_ID" ]; then
+            echo "Missing OPENAI_VECTOR_STORE_ID"; exit 1;
+          fi
+
+          # Geänderte Dateien gegenüber vorherigem Commit (bei erstem Lauf Fallback auf alle)
+          CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} \
+            | grep -Ev '^(node_modules/|\.git/|\.github/|dist/|build/|\.astro/)' || true)
+
+          if [ -z "$CHANGED" ]; then
+            CHANGED=$(git ls-files | grep -Ev '^(node_modules/|\.git/|\.github/|dist/|build/|\.astro/)' || true)
+          fi
+
+          if [ -z "$CHANGED" ]; then
+            echo "No eligible files to upload."; exit 0;
+          fi
+
+          echo "$CHANGED" | tr '\n' ' ' > files.txt
+
+          openai vector-stores files upload \
+            --vector-store-id "$OPENAI_VECTOR_STORE_ID" \
+            --files $(cat files.txt)
