@@ -1,0 +1,84 @@
+---
+interface Props {
+  isOpen?: boolean;
+  imageUrl?: string;
+  alt?: string;
+  title?: string;
+}
+/* SSR-HTML + kleines JS; crawlers sehen den Content dennoch im DOM */
+const { imageUrl = '', alt = '', title = '' } = Astro.props as Props;
+---
+<dialog id="jgl-lightbox" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm p-0 m-0 hidden">
+  <div class="absolute inset-0 flex items-center justify-center p-6">
+    <figure class="max-w-5xl w-full">
+      <img id="jgl-lightbox-img" src={imageUrl} alt={alt} class="w-full h-auto rounded-xl border border-white/10" />
+      <figcaption id="jgl-lightbox-caption" class="text-center text-white/80 mt-3 text-sm" class:list={{ hidden: !title }}>
+        {title}
+      </figcaption>
+    </figure>
+    <button
+      id="jgl-lightbox-close"
+      class="absolute top-4 right-4 text-white/80 hover:text-white text-xl"
+      aria-label="Lightbox schließen"
+      type="button"
+    >
+      ✕
+    </button>
+  </div>
+</dialog>
+
+<script is:inline client:load>
+  const dialog = document.getElementById('jgl-lightbox');
+  const image = document.getElementById('jgl-lightbox-img');
+  const caption = document.getElementById('jgl-lightbox-caption');
+  const closeButton = document.getElementById('jgl-lightbox-close');
+
+  const showDialog = () => {
+    if (!dialog) return;
+    dialog.classList.remove('hidden');
+    if (dialog instanceof HTMLDialogElement && typeof dialog.showModal === 'function') {
+      dialog.showModal();
+    }
+  };
+
+  const hideDialog = () => {
+    if (!dialog) return;
+    if (dialog instanceof HTMLDialogElement && typeof dialog.close === 'function') {
+      dialog.close();
+    }
+    dialog.classList.add('hidden');
+  };
+
+  const openLightbox = (url, altText = '', titleText = '') => {
+    if (image instanceof HTMLImageElement) {
+      image.src = url;
+      image.alt = altText;
+    }
+    if (caption) {
+      caption.textContent = titleText;
+      caption.classList.toggle('hidden', titleText.length === 0);
+    }
+    showDialog();
+  };
+
+  document.addEventListener('click', (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+
+    const opener = target.closest('[data-lightbox-src]');
+    if (opener instanceof HTMLElement) {
+      event.preventDefault();
+      const url = opener.getAttribute('data-lightbox-src') ?? '';
+      const altText = opener.getAttribute('data-lightbox-alt') ?? '';
+      const titleText = opener.getAttribute('data-lightbox-title') ?? '';
+      openLightbox(url, altText, titleText);
+      return;
+    }
+
+    if (target.id === 'jgl-lightbox' || target.id === 'jgl-lightbox-close') {
+      hideDialog();
+    }
+  });
+
+  closeButton?.addEventListener('click', hideDialog);
+</script>

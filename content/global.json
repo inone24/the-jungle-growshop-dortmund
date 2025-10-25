@@ -1,0 +1,39 @@
+{
+  "siteUrl": "https://the-jungle-growshop-dortmund.de",
+  "businessName": "The Jungle Growshop Dortmund",
+  "legalName": "The Jungle Growshop Dortmund Inh. Lea Sommer",
+  "tagline": "Dein Urban-Gardening-Hub mit Showroom, Werkstatt und Community",
+  "address": {
+    "street": "Mallinckrodtstraße 212",
+    "postalCode": "44147",
+    "city": "Dortmund",
+    "country": "Deutschland"
+  },
+  "contact": {
+    "phone": "+49 231 58945330",
+    "email": "hallo@thejungle.dortmund"
+  },
+  "openingHours": [
+    "Montag–Freitag: 11:00 – 19:00 Uhr",
+    "Samstag: 11:00 – 16:00 Uhr",
+    "Werkstatt: Express-Service nach Absprache"
+  ],
+  "paymentMethods": [
+    "Barzahlung",
+    "EC-Karte",
+    "Kreditkarte",
+    "Kontaktlos"
+  ],
+  "publicTransport": [
+    "U41 & U42 – Haltestelle Schützenstraße",
+    "Bus 455/456 – Haltestelle Schützenstraße"
+  ],
+  "socials": {
+    "instagram": "https://www.instagram.com/thejungle_dortmund",
+    "facebook": "https://www.facebook.com/thejungledortmund"
+  },
+  "geo": {
+    "latitude": 51.5282,
+    "longitude": 7.4526
+  }
+}

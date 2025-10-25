@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import seo from '../../content/seo/team.json';
+
+const breadcrumbs = [
+  { name: 'Startseite', href: '/' },
+  { name: 'Team', href: '/team/' },
+];
+
+const members = [
+  {
+    name: 'Sophie',
+    role: 'Store Lead & Urban-Gardening-Coach',
+    bio: 'Spezialisiert auf nachhaltige Substrate und Community-Gärten. Organisiert Workshops und Schulungen.',
+  },
+  {
+    name: 'Tariq',
+    role: 'Technik & Klima',
+    bio: 'Plant komplette Klima-Setups, testet Lampen und sorgt dafür, dass dein Grow effizient bleibt.',
+  },
+  {
+    name: 'Mara',
+    role: 'Headshop & Zubehör',
+    bio: 'Berät zu Vaporizern, Extraktion und Zubehör. Kümmert sich um den Social-Media-Auftritt.',
+  },
+  {
+    name: 'Jonas',
+    role: 'Service & Logistik',
+    bio: 'Koordiniert Click & Collect, Lieferungen und Werkstatt. Dein Ansprechpartner für Reparaturen.',
+  },
+];
+---
+<BaseLayout seo={seo} breadcrumbs={breadcrumbs}>
+  <section class="bg-slate-950/60">
+    <div class="mx-auto max-w-6xl space-y-6 px-4 py-16 sm:px-6">
+      <h1 class="text-4xl font-heading text-brand-light">Menschen hinter The Jungle</h1>
+      <p class="text-lg text-slate-300">
+        Wir sind ein Team aus leidenschaftlichen Grower:innen, Tech-Nerds und Urban-Gardening-Fans. Wir teilen unser Wissen
+        gerne mit dir – im Laden, per Mail oder bei unseren Workshops.
+      </p>
+      <div class="grid gap-6 sm:grid-cols-2">
+        {members.map((member) => (
+          <article class="space-y-3 rounded-3xl border border-white/5 bg-white/5 p-6" key={member.name}>
+            <div>
+              <h2 class="text-2xl font-heading text-white">{member.name}</h2>
+              <p class="text-sm uppercase tracking-wide text-brand-light">{member.role}</p>
+            </div>
+            <p class="text-sm text-slate-300">{member.bio}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="mx-auto max-w-6xl space-y-6 px-4 py-16 sm:px-6">
+      <h2 class="text-3xl font-heading text-brand-light">Werde Teil der Jungle-Crew</h2>
+      <p class="text-sm text-slate-300">
+        Du liebst Pflanzen, Technik und Service? Bewirb dich initiativ per Mail mit ein paar Zeilen zu dir und deinem Grow-Weg.
+        Wir sind immer auf der Suche nach Support für Events, Beratung oder Content-Produktion.
+      </p>
+      <a href="mailto:hello@the-jungle-growshop.de" class="inline-flex items-center gap-2 text-brand-light">
+        Initiativ bewerben →
+      </a>
+    </div>
+  </section>
+</BaseLayout>
