@@ -1,0 +1,11 @@
+---
+const { orientation = "horizontal", className = "" } = Astro.props as {
+  orientation?: "horizontal" | "vertical";
+  className?: string;
+};
+---
+{orientation === "horizontal" ? (
+  <hr class={`h-px w-full bg-white/20 ${className}`} />
+) : (
+  <div class={`h-full w-px bg-white/20 ${className}`} />
+)}

@@ -1,0 +1,39 @@
+---
+const base = import.meta.env.BASE_URL;
+type Crumb = { name: string; href?: string; current?: boolean };
+const { items = [], emitJsonLd = false } = Astro.props as { items: Crumb[]; emitJsonLd?: boolean };
+
+const jsonLd = emitJsonLd
+  ? {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: items.map((c: Crumb, i: number) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: c.name,
+        item: c.href
+          ? c.href.startsWith("/")
+            ? `https://inone24.github.io/the-jungle-growshop-dortmund${c.href}`
+            : c.href
+          : undefined
+      }))
+    }
+  : null;
+---
+<nav aria-label="Brotkrumen">
+  <ol class="flex flex-wrap items-center gap-2 text-sm text-white/70">
+    {items.map((c, i) => (
+      <li class="inline-flex items-center gap-2">
+        {i > 0 && <span class="text-white/40">/</span>}
+        {c.href && !c.current ? (
+          <a class="hover:text-white" href={c.href.startsWith("/") ? `${base}${c.href.slice(1)}` : c.href}>
+            {c.name}
+          </a>
+        ) : (
+          <span class="text-white">{c.name}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+{emitJsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>}

@@ -1,0 +1,24 @@
+---
+import { Carousel, CarouselItem } from "@/islands/ui/Carousel.client";
+const { items = [] } = Astro.props as { items: { src: string; alt: string; title?: string }[] };
+---
+<noscript>
+  <div class="grid md:grid-cols-3 gap-4">
+    {items.map((img) => (
+      <figure class="ui-glass rounded-xl overflow-hidden">
+        <img src={img.src} alt={img.alt} class="w-full h-auto" />
+        {img.title && <figcaption class="p-2 text-white/80 text-sm">{img.title}</figcaption>}
+      </figure>
+    ))}
+  </div>
+</noscript>
+<Carousel client:idle>
+  {items.map((img) => (
+    <CarouselItem>
+      <figure class="ui-glass rounded-xl overflow-hidden">
+        <img src={img.src} alt={img.alt} class="w-full h-auto" />
+        {img.title && <figcaption class="p-2 text-white/80 text-sm">{img.title}</figcaption>}
+      </figure>
+    </CarouselItem>
+  ))}
+</Carousel>

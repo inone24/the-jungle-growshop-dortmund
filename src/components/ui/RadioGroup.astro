@@ -1,0 +1,26 @@
+---
+import { RadioGroup, RadioGroupItem } from "@/islands/ui/RadioGroup.client";
+const { name = "option", options = [], value = "" } = Astro.props as {
+  name?: string;
+  options?: { label: string; value: string }[];
+  value?: string;
+};
+---
+<noscript>
+  <fieldset class="grid gap-2">
+    {options.map((option) => (
+      <label class="inline-flex items-center gap-2 text-white/90">
+        <input type="radio" name={name} value={option.value} checked={option.value === value} />
+        <span>{option.label}</span>
+      </label>
+    ))}
+  </fieldset>
+</noscript>
+<RadioGroup client:idle defaultValue={value} aria-label={name}>
+  {options.map((option) => (
+    <label class="inline-flex items-center gap-2 text-white/90">
+      <RadioGroupItem value={option.value} />
+      <span>{option.label}</span>
+    </label>
+  ))}
+</RadioGroup>

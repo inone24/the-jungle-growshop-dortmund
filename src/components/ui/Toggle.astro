@@ -1,0 +1,13 @@
+---
+import { Toggle } from "@/islands/ui/Toggle.client";
+const { pressed = false, label = "" } = Astro.props as { pressed?: boolean; label?: string };
+---
+<noscript>
+  <label class="inline-flex items-center gap-2">
+    <input type="checkbox" checked={pressed} />
+    <span class="text-white/80">{label}</span>
+  </label>
+</noscript>
+<Toggle client:visible defaultPressed={pressed} aria-label={label}>
+  {label}
+</Toggle>

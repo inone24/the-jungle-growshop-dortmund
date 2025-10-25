@@ -1,0 +1,24 @@
+---
+import { InputOTPIsland } from "@/islands/ui/InputOTP.client";
+const { name = "otp", slots = 6, label = "Code", placeholder = "" } = Astro.props as {
+  name?: string;
+  slots?: number;
+  label?: string;
+  placeholder?: string;
+};
+---
+<noscript>
+  <label class="block text-sm text-white/70 mb-1" for={`otp-${name}`}>
+    {label}
+  </label>
+  <input
+    id={`otp-${name}`}
+    name={name}
+    inputmode="numeric"
+    pattern="[0-9]*"
+    maxlength={slots}
+    placeholder={placeholder}
+    class="w-full rounded-md border border-white/20 bg-transparent px-3 py-2 text-white"
+  />
+</noscript>
+<InputOTPIsland client:visible name={name} slots={slots} />

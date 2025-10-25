@@ -1,0 +1,15 @@
+---
+import { LineChartIsland } from "@/islands/ui/ChartContainer.client";
+const { data = [], xKey = "name", yKey = "value" } = Astro.props as { data: any[]; xKey?: string; yKey?: string };
+---
+<noscript>
+  <figure class="ui-glass rounded-xl p-3">
+    <figcaption class="text-white/80 mb-2">Chart: {yKey} über {xKey}</figcaption>
+    <ul class="text-white/70 text-sm">
+      {data.map((d) => (
+        <li>{d[xKey]}: {d[yKey]}</li>
+      ))}
+    </ul>
+  </figure>
+</noscript>
+<LineChartIsland client:visible data={data} xKey={xKey} yKey={yKey} />

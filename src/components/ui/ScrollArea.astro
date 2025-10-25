@@ -1,0 +1,19 @@
+---
+import { ScrollArea } from "@/islands/ui/ScrollArea.client";
+const { className = "", viewportClass = "" } = Astro.props as {
+  className?: string;
+  viewportClass?: string;
+};
+---
+<noscript>
+  <div class={`overflow-auto ${className}`} style="max-height: 20rem;">
+    <div class={viewportClass}>
+      <slot />
+    </div>
+  </div>
+</noscript>
+<ScrollArea client:visible className={className}>
+  <div class={viewportClass}>
+    <slot />
+  </div>
+</ScrollArea>

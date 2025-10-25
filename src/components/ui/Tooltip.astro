@@ -1,0 +1,20 @@
+---
+import { TooltipProvider, TooltipRoot, TooltipTrigger, TooltipContent } from "@/islands/ui/Tooltip.client";
+const { trigger = "?", content = "" } = Astro.props as { trigger?: string; content?: string };
+---
+<noscript>
+  <span
+    title={content}
+    class="inline-flex items-center justify-center rounded-md border border-white/20 bg-white/5 px-2 py-1 text-xs text-white/80"
+  >
+    {trigger}
+  </span>
+</noscript>
+<TooltipProvider client:idle>
+  <TooltipRoot>
+    <TooltipTrigger class="inline-flex items-center justify-center rounded-md border border-white/20 bg-white/5 px-2 py-1 text-xs text-white/80">
+      {trigger}
+    </TooltipTrigger>
+    <TooltipContent>{content}</TooltipContent>
+  </TooltipRoot>
+</TooltipProvider>

@@ -1,0 +1,43 @@
+---
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/islands/ui/Tabs.client";
+
+const { items = [], defaultValue } = Astro.props as {
+  defaultValue?: string;
+  items: {
+    value: string;
+    label: string;
+    content?: any;
+    slot?: string;
+  }[];
+};
+
+const initialValue = defaultValue ?? items[0]?.value ?? "tab-1";
+---
+<noscript>
+  <div class="space-y-2">
+    {items.map((item) => (
+      <details class="ui-glass rounded-lg" key={item.value}>
+        <summary class="cursor-pointer px-3 py-2 text-white font-medium">{item.label}</summary>
+        <div class="px-3 pb-3 text-white/80">
+          {item.slot && Astro.slots.has(item.slot) ? <slot name={item.slot} /> : item.content}
+        </div>
+      </details>
+    ))}
+  </div>
+</noscript>
+<Tabs client:idle defaultValue={initialValue}>
+  <TabsList>
+    {items.map((item) => (
+      <TabsTrigger value={item.value} key={item.value}>
+        {item.label}
+      </TabsTrigger>
+    ))}
+  </TabsList>
+  {items.map((item) => (
+    <TabsContent value={item.value} key={item.value}>
+      <div class="ui-glass rounded-lg p-3 text-white/80">
+        {item.slot && Astro.slots.has(item.slot) ? <slot name={item.slot} /> : item.content}
+      </div>
+    </TabsContent>
+  ))}
+</Tabs>

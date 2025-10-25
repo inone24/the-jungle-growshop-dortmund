@@ -1,0 +1,21 @@
+---
+import { Avatar as AvatarIsland, AvatarImage, AvatarFallback } from "@/islands/ui/Avatar.client";
+const { src = "", alt = "", initials = "TJ", className = "", useIsland = false } = Astro.props as {
+  src?: string;
+  alt?: string;
+  initials?: string;
+  className?: string;
+  useIsland?: boolean;
+};
+---
+{useIsland ? (
+  <AvatarIsland client:idle className={className}>
+    {src ? <AvatarImage src={src} alt={alt} /> : <AvatarFallback>{initials}</AvatarFallback>}
+  </AvatarIsland>
+) : (
+  <figure class={`relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full bg-white/10 ${className}`}>
+    {src ? <img src={src} alt={alt} class="aspect-square h-full w-full object-cover" /> : (
+      <span class="m-auto text-white/80">{initials}</span>
+    )}
+  </figure>
+)}
