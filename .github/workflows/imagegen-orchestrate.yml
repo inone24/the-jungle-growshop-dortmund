@@ -1,0 +1,52 @@
+name: Use ImageGen (orchestrate)
+
+on:
+  workflow_dispatch:
+    inputs:
+      page:
+        description: 'Page route (e.g., /produkte/led-lampen)'
+        required: true
+        type: string
+      container:
+        description: 'hero|slider|product'
+        required: true
+        default: 'hero'
+        type: choice
+        options: [hero, slider, product]
+      brand:
+        description: 'Brand mood'
+        required: false
+        default: 'GrowCologne'
+        type: string
+      keywords:
+        description: 'CSV'
+        required: false
+        type: string
+      desc:
+        description: 'Short description'
+        required: false
+        type: string
+      preset:
+        description: 'Preset'
+        required: false
+        default: 'hero_photoreal'
+        type: choice
+        options: [hero_photoreal, slider_emotion, product_studio, product_transparent]
+      branch:
+        description: 'Target branch'
+        required: false
+        type: string
+
+jobs:
+  run-imagegen:
+    uses: OWNER_OF_IMAGEGEN/IMAGEGEN_REPO/.github/workflows/orchestrate.yml@main
+    with:
+      page: ${{ github.event.inputs.page }}
+      container: ${{ github.event.inputs.container }}
+      brand: ${{ github.event.inputs.brand }}
+      keywords: ${{ github.event.inputs.keywords }}
+      desc: ${{ github.event.inputs.desc }}
+      preset: ${{ github.event.inputs.preset }}
+      branch: ${{ github.event.inputs.branch }}
+    secrets:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
