@@ -1,0 +1,52 @@
+name: Vector Store Cleanup
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install OpenAI CLI
+        run: npm -g i openai
+
+      - name: Remove files not in git anymore
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_VECTOR_STORE_ID: ${{ secrets.OPENAI_VECTOR_STORE_ID }}
+        run: |
+          if [ -z "$OPENAI_VECTOR_STORE_ID" ]; then
+            echo "Missing OPENAI_VECTOR_STORE_ID"; exit 1;
+          fi
+
+          # Repo-Dateiliste
+          git ls-files | grep -Ev '^(node_modules/|\.git/|\.github/|dist/|build/|\.astro/)' > repo_files.txt
+
+          # Vector-Store-Dateien (IDs und Namen)
+          openai vector-stores files list --vector-store-id "$OPENAI_VECTOR_STORE_ID" --limit 10000 > vs_list.json
+
+          # JSON → TSV (id \t filename)
+          node - <<'JS'
+          import fs from 'fs';
+          const data = JSON.parse(fs.readFileSync('vs_list.json','utf8'));
+          for (const f of (data.data || [])) {
+            // name kann in künftigen CLI-Versionen anders heißen; ggf. "filename" o. ä.
+            const name = (f.filename || f.name || f.display_name || "").trim();
+            if (name) console.log(`${f.id}\t${name}`);
+          }
+          JS
+          > vs_files.tsv
+
+          # Löschen, wenn Datei nicht (mehr) im Repo ist
+          while IFS=$'\t' read -r ID NAME; do
+            if ! grep -Fx -- "$NAME" repo_files.txt >/dev/null 2>&1; then
+              echo "Deleting $NAME ($ID) from Vector Store...";
+              openai vector-stores files delete --vector-store-id "$OPENAI_VECTOR_STORE_ID" --file-id "$ID" || true
+            fi
+          done < vs_files.tsv
