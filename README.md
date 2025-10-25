@@ -1,46 +1,22 @@
 # The Jungle Growshop Dortmund — Astro SSG
 
-Static, fast, SEO-friendly site for a local growshop. Built with Astro + Tailwind.
+Static, fast, SEO-friendly site built with Astro + Tailwind (Project Pages, `BASE_URL`-safe) and a UI library based on Radix/shadcn as Astro Islands.
 
-## Scripts
+## Quick Start
 
 ```bash
-pnpm dev       # dev server
-pnpm build     # static build -> /dist
-pnpm preview   # preview /dist
-pnpm lint      # eslint
-pnpm format    # prettier
-pnpm typecheck # typescript
+pnpm install
+pnpm dev
+pnpm build   # static -> dist
 ```
 
-## Content
+## Docs
 
-- `content/global.json` – Stammdaten, Öffnungszeiten, Zahlarten
-- `content/seo/*.json` – Title, Description, Canonical pro Route
-
-## Pages
-
-- `/` Home
-- `/growshop_dortmund/`
-- `/produkte/`
-- `/wissen/`
-- `/standort/`
-- `/kontakt/`
-- `/team/`
-- `/impressum/`, `/datenschutz/`
-
-## SEO
-
-- `<title>`, `<meta description>`, canonical, OG/Twitter
-- JSON-LD via `SchemaScript.astro` (LocalBusiness, Breadcrumb)
-- `@astrojs/sitemap`, `robots.txt`, `manifest.webmanifest`
-
-## Deploy (GitHub Pages)
-
-Workflows unter `.github/workflows` (noch ausstehend). In Repo Settings ▸ Pages: Build and deployment → GitHub Actions.
+- [UI Library – Architektur & Best Practices](docs/ASTRO_UI_LIBRARY.md)
+- [UI Library – Snippets (Copy & Paste)](docs/UI_SNIPPETS.md)
 
 ## Notes
 
-- In Produktion bleibt der Head clean (keine Dev-Injektionen).
-- Fonts nutzen System-Fallbacks; self-hosted WOFF2 kann leicht ergänzt werden.
-- Der Content ist bewusst textlastig, damit Suchmaschinen lokale Relevanz erkennen.
+- Project Pages: `astro.config.mjs` sets `site` + `base`.
+- Internal links & assets via `import.meta.env.BASE_URL`.
+- Build & Deploy: GitHub Actions are configured (push to `main` triggers Pages).

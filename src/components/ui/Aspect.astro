@@ -1,0 +1,21 @@
+---
+import AspectRatioIsland from "@/islands/ui/AspectRatio.client";
+const { ratio = "16/9", useIsland = false, className = "" } = Astro.props as {
+  ratio?: string;
+  useIsland?: boolean;
+  className?: string;
+};
+const ratioParts = ratio.split("/");
+const ratioValue = ratio.includes("/")
+  ? Number(ratioParts[0]) / (Number(ratioParts[1]) || 1)
+  : Number(ratio);
+---
+{useIsland ? (
+  <AspectRatioIsland client:visible ratio={ratioValue}>
+    <slot />
+  </AspectRatioIsland>
+) : (
+  <div class={`aspect-[${ratio}] ${className}`}>
+    <slot />
+  </div>
+)}

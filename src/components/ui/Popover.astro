@@ -1,0 +1,16 @@
+---
+import { Popover, PopoverTrigger, PopoverContent } from "@/islands/ui/Popover.client";
+const { trigger = "Mehr", content = "" } = Astro.props as { trigger?: string; content?: string };
+---
+<noscript>
+  <div class="ui-glass rounded-md p-3">
+    <strong class="text-white">{trigger}:</strong>
+    <span class="text-white/80"> {content}</span>
+  </div>
+</noscript>
+<Popover client:idle>
+  <PopoverTrigger class="rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white hover:bg-white/10">
+    {trigger}
+  </PopoverTrigger>
+  <PopoverContent>{content}</PopoverContent>
+</Popover>

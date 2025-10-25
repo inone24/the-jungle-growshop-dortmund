@@ -4,6 +4,7 @@
   --glass-border: rgba(255, 255, 255, 0.08);
   --glow-primary: 0 25px 60px -30px rgba(58, 95, 11, 0.65);
   --glow-alt: 0 35px 80px -20px rgba(148, 193, 30, 0.55);
+  --text-high: rgba(255, 255, 255, 0.92);
 }
 
 @keyframes particle-float {

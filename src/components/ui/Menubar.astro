@@ -1,0 +1,52 @@
+---
+import MenubarIsland from "@/islands/ui/Menubar.client";
+import { withBase } from "@/lib/url";
+const base = import.meta.env.BASE_URL;
+const { menus = [] } = Astro.props as {
+  menus: {
+    label: string;
+    items: {
+      label: string;
+      href?: string;
+      type?: "item" | "checkbox" | "radio";
+      checked?: boolean;
+      submenu?: { label: string; href?: string }[];
+    }[];
+  }[];
+};
+
+const normalizedMenus = menus.map((menu) => ({
+  ...menu,
+  items: menu.items.map((item) => ({
+    ...item,
+    href: withBase(item.href, base),
+    submenu: item.submenu?.map((sub) => ({
+      ...sub,
+      href: withBase(sub.href, base),
+    })),
+  })),
+}));
+---
+<noscript>
+  <nav aria-label="Menüleiste" class="ui-glass rounded-md p-2">
+    <ul class="flex flex-wrap gap-4">
+      {normalizedMenus.map((menu) => (
+        <li>
+          <span class="font-semibold text-white">{menu.label}</span>
+          <ul class="ml-3 list-disc text-white/80">
+            {menu.items.map((item) => (
+              <li>
+                {item.href ? (
+                  <a href={item.href} class="hover:underline">{item.label}</a>
+                ) : (
+                  item.label
+                )}
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</noscript>
+<MenubarIsland client:idle menus={normalizedMenus} />

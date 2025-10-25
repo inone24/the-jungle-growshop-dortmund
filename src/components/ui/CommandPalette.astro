@@ -1,0 +1,21 @@
+---
+import { CommandDialog } from "../../islands/ui/Command.client";
+import { withBase } from "@/lib/url";
+
+const base = import.meta.env.BASE_URL;
+const { items = [] } = Astro.props as { items: { label: string; href?: string }[] };
+const normalizedItems = items.map((item) => ({
+  ...item,
+  href: withBase(item.href, base) ?? "#",
+}));
+---
+<noscript>
+  <ul class="ui-glass rounded-lg p-3">
+    {normalizedItems.map((item) => (
+      <li>
+        <a href={item.href ?? '#'}>{item.label}</a>
+      </li>
+    ))}
+  </ul>
+</noscript>
+<CommandDialog client:idle items={normalizedItems} />

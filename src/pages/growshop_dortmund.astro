@@ -1,18 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Lightbox from '../components/Lightbox.astro';
+import ImageLightbox from '@/components/ImageLightbox.astro';
 import type { GlobalContent, StructuredData } from '../types';
 import '../styles/home.css';
 import seo from '../../content/seo/growshop.json';
 import global from '../../content/global.json';
 
 const globalData = global as GlobalContent;
+const base = import.meta.env.BASE_URL ?? '/';
 const phoneHref = `tel:${globalData.contact.phone.replace(/\s+/g, '')}`;
 const addressLine = `${globalData.address.street}, ${globalData.address.postalCode} ${globalData.address.city}`;
 
 const breadcrumbs = [
-  { name: 'Startseite', href: '/' },
-  { name: 'Growshop Dortmund', href: '/growshop_dortmund/' },
+  { name: 'Startseite', href: base },
+  { name: 'Growshop Dortmund', href: `${base}growshop_dortmund/` },
 ];
 
 const kpis = [
@@ -45,33 +46,33 @@ const categories = [
     title: 'Grow-Komplettsets',
     description:
       'Von 60×60 bis 150×150 cm – mit Zelten, LED, AKF, EC-Lüftern und Controllern dimensioniert und sofort startklar.',
-    href: '/produkte/',
+    href: `${base}produkte/`,
   },
   {
     title: 'LED-Grow-Lampen',
     description:
       'Bar-Style, Vollspektrum, dimmbar. 100–650 W mit PPFD-Charts, Spektren und Vergleichsmessungen im Store.',
-    href: '/produkte/',
+    href: `${base}produkte/`,
   },
   {
     title: 'Growboxen & Zelte',
     description: 'Secret Jardin, Mammoth, Homebox – stabil, lichtdicht und mit cleveren Details für jede Fläche.',
-    href: '/produkte/',
+    href: `${base}produkte/`,
   },
   {
     title: 'Lüftung & Aktivkohlefilter',
     description: 'EC-Lüfter, AKF, Schalldämpfer, Controller – leise, effizient und skalierbar für Mehrzelt-Setups.',
-    href: '/produkte/',
+    href: `${base}produkte/`,
   },
   {
     title: 'Dünger & Additive',
     description: 'Bio & Mineral – CANNA, Plagron, Advanced Nutrients, Athena. Passende Feeding-Pläne inklusive.',
-    href: '/produkte/',
+    href: `${base}produkte/`,
   },
   {
     title: 'Substrate & Töpfe',
     description: 'Living Soil, Coco, Hydro-Substrate, Fabric- & Air-Pots – mit passenden Bewässerungskonzepten.',
-    href: '/produkte/',
+    href: `${base}produkte/`,
   },
 ];
 
@@ -223,26 +224,13 @@ const faqPage: StructuredData = {
         </div>
 
         <div class="flex flex-wrap justify-center gap-4 pt-6">
-          <a href="/kontakt/" class="focus-ring rounded-full bg-white text-black font-semibold px-8 py-3 hover:bg-white/90">Beratung &amp; Kauf</a>
-          <a href="/standort/" class="focus-ring rounded-full border border-white/20 bg-white/5 hover:bg-white/10 px-8 py-3">Route starten</a>
+        <a href={`${base}kontakt/`} class="focus-ring rounded-full bg-white text-black font-semibold px-8 py-3 hover:bg-white/90">Beratung &amp; Kauf</a>
+        <a href={`${base}standort/`} class="focus-ring rounded-full border border-white/20 bg-white/5 hover:bg-white/10 px-8 py-3">Route starten</a>
           <a href={phoneHref} class="focus-ring rounded-full border border-white/20 bg-white/5 hover:bg-white/10 px-8 py-3">Jetzt anrufen</a>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-6 mt-12">
-          {heroImages.map((image) => (
-            <a
-              href={image.url}
-              data-lightbox-src={image.url}
-              data-lightbox-alt={image.alt}
-              data-lightbox-title={image.title}
-              class="group relative glass-panel border-white/10 rounded-2xl aspect-video overflow-hidden hover:border-[#3A5F0B]/50 hover:scale-[1.02] transition"
-            >
-              <img src={image.url} alt={image.alt} class="w-full h-full object-cover group-hover:scale-110 transition" loading="lazy" />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end justify-center p-4">
-                <span class="text-white text-sm font-semibold">{image.title}</span>
-              </div>
-            </a>
-          ))}
+        <div class="mt-12">
+          <ImageLightbox images={heroImages} />
         </div>
       </div>
     </div>
@@ -267,7 +255,7 @@ const faqPage: StructuredData = {
         ))}
       </div>
       <div class="text-center mt-10">
-        <a href="/produkte/" class="focus-ring rounded-full bg-white/10 border border-white/20 hover:bg-white/20 px-6 py-2 text-white">Alle Kategorien ansehen</a>
+        <a href={`${base}produkte/`} class="focus-ring rounded-full bg-white/10 border border-white/20 hover:bg-white/20 px-6 py-2 text-white">Alle Kategorien ansehen</a>
       </div>
     </div>
   </section>
@@ -385,7 +373,7 @@ const faqPage: StructuredData = {
         ))}
       </div>
       <div class="text-center mt-10">
-        <a href="/kontakt/" class="focus-ring rounded-full bg-white text-black font-semibold px-8 py-3 hover:bg-white/90">Beratungstermin vereinbaren</a>
+        <a href={`${base}kontakt/`} class="focus-ring rounded-full bg-white text-black font-semibold px-8 py-3 hover:bg-white/90">Beratungstermin vereinbaren</a>
       </div>
     </div>
   </section>
@@ -436,7 +424,7 @@ const faqPage: StructuredData = {
             <a class="focus-ring rounded-lg bg-white text-black px-4 py-2" href="https://www.google.com/maps/dir/?api=1&destination=Mallinckrodtstra%C3%9Fe+212,+44147+Dortmund" target="_blank" rel="noopener noreferrer">
               Route starten
             </a>
-            <a class="focus-ring rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-white hover:bg-white/10" href="/standort/">
+            <a class="focus-ring rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-white hover:bg-white/10" href={`${base}standort/`}>
               Standortdetails
             </a>
           </div>
@@ -515,8 +503,8 @@ const faqPage: StructuredData = {
           Wir dimensionieren dein Setup (Zelt, LED, Lüftung/AKF, Controller) und richten Profile &amp; Automationen ein. Alles sofort verfügbar.
         </p>
         <div class="flex flex-wrap gap-4 justify-center">
-          <a href="/kontakt/" class="focus-ring rounded-lg bg-white px-8 py-3 text-black font-semibold hover:bg-white/90">Beratung &amp; Kauf sichern</a>
-          <a href="/standort/" class="focus-ring rounded-lg border border-white/20 bg-white/5 px-8 py-3 hover:bg-white/10 text-white">Route planen</a>
+        <a href={`${base}kontakt/`} class="focus-ring rounded-lg bg-white px-8 py-3 text-black font-semibold hover:bg-white/90">Beratung &amp; Kauf sichern</a>
+        <a href={`${base}standort/`} class="focus-ring rounded-lg border border-white/20 bg-white/5 px-8 py-3 hover:bg-white/10 text-white">Route planen</a>
         </div>
         <div class="mt-10 glass-panel rounded-2xl p-6 text-left inline-block">
           <address class="not-italic text-white/90">
@@ -527,6 +515,4 @@ const faqPage: StructuredData = {
       </div>
     </div>
   </section>
-
-  <Lightbox />
 </BaseLayout>

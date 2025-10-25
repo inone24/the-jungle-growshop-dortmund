@@ -1,0 +1,42 @@
+---
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectLabel,
+  SelectSeparator,
+  SelectValue,
+} from "@/islands/ui/Select.client";
+const { name = "select", value = "", items = [] } = Astro.props as {
+  name?: string;
+  value?: string;
+  items?: { label: string; value: string }[];
+};
+---
+<noscript>
+  <label class="mb-1 block text-sm text-white/70" for={name}>{name}</label>
+  <select
+    id={name}
+    name={name}
+    class="w-full rounded-md border border-white/20 bg-transparent px-3 py-2 text-white"
+  >
+    {items.map((item) => (
+      <option value={item.value} selected={item.value === value}>
+        {item.label}
+      </option>
+    ))}
+  </select>
+</noscript>
+<Select client:idle defaultValue={value} name={name}>
+  <SelectTrigger>
+    <SelectValue placeholder={name} />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectLabel>{name}</SelectLabel>
+    {items.map((item) => (
+      <SelectItem value={item.value}>{item.label}</SelectItem>
+    ))}
+    {items.length > 0 && <SelectSeparator />}
+  </SelectContent>
+</Select>

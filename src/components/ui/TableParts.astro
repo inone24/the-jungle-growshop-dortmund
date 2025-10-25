@@ -1,0 +1,22 @@
+---
+const { as = "tbody", className = "" } = Astro.props as {
+  as?: "thead" | "tbody" | "tfoot" | "tr" | "th" | "td" | "caption";
+  className?: string;
+};
+
+const baseClass: Record<string, string> = {
+  thead: "[&_tr]:border-b",
+  tbody: "[&_tr:last-child]:border-0",
+  tfoot: "border-t bg-white/5 font-medium [&>tr]:last:border-b-0",
+  tr: "border-b transition-colors hover:bg-white/5",
+  th: "h-10 px-2 text-left align-middle font-medium text-white/70",
+  td: "p-2 align-middle",
+  caption: "mt-4 text-sm text-white/70",
+};
+
+const Tag = as;
+const classes = `${baseClass[as] ?? ""} ${className}`.trim();
+---
+<component is={Tag} class={classes}>
+  <slot />
+</component>
