@@ -39,7 +39,7 @@ on:
 
 jobs:
   run-imagegen:
-    uses: OWNER_OF_IMAGEGEN/IMAGEGEN_REPO/.github/workflows/orchestrate.yml@main
+    uses: inone24/imagegen/.github/workflows/orchestrate.yml@main
     with:
       page: ${{ github.event.inputs.page }}
       container: ${{ github.event.inputs.container }}
