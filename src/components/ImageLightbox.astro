@@ -1,0 +1,15 @@
+---
+import ImageLightboxIsland from "@/islands/ImageLightbox.client";
+const { images = [] } = Astro.props as { images?: {url:string; alt:string; title?:string}[] };
+---
+<div class="grid md:grid-cols-3 gap-6">
+  {images.map((img) => (
+    <a href={img.url} data-lightbox-src={img.url} data-lightbox-alt={img.alt} data-lightbox-title={img.title || ""} class="group relative ui-glass rounded-2xl aspect-video overflow-hidden hover:scale-[1.02] transition">
+      <img src={img.url} alt={img.alt} class="w-full h-full object-cover group-hover:scale-110 transition"/>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end justify-center p-4">
+        <span class="text-white text-sm font-semibold">{img.title}</span>
+      </div>
+    </a>
+  ))}
+</div>
+<ImageLightboxIsland client:idle />

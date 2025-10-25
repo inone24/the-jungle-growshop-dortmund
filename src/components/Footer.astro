@@ -1,0 +1,57 @@
+---
+import type { GlobalContent } from '../types';
+const { global } = Astro.props as { global: GlobalContent };
+---
+<footer class="border-t border-white/10 bg-slate-950/80">
+  <div class="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-3 sm:px-6">
+    <div>
+      <h2 class="text-lg font-heading text-brand-light">{global.businessName}</h2>
+      <p class="mt-3 text-sm text-slate-300">{global.tagline}</p>
+      <div class="mt-4 space-y-1 text-sm">
+        <p>{global.address.street}</p>
+        <p>{global.address.postalCode} {global.address.city}</p>
+        <p>{global.address.country}</p>
+      </div>
+    </div>
+    <div class="space-y-3 text-sm">
+      <div>
+        <h3 class="font-semibold text-brand-light">Kontakt</h3>
+        <p>Tel: <a href={`tel:${global.contact.phone.replace(/\s+/g, '')}`}>{global.contact.phone}</a></p>
+        <p>Email: <a href={`mailto:${global.contact.email}`}>{global.contact.email}</a></p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-brand-light">Öffnungszeiten</h3>
+        <ul class="mt-2 space-y-1">
+          {global.openingHours.map((slot) => (
+            <li>{slot}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+    <div class="space-y-3 text-sm">
+      <div>
+        <h3 class="font-semibold text-brand-light">Zahlungsmethoden</h3>
+        <p>{global.paymentMethods.join(', ')}</p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-brand-light">ÖPNV</h3>
+        <ul class="mt-2 space-y-1">
+          {global.publicTransport.map((line) => (
+            <li>{line}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="flex gap-3 pt-2 text-lg">
+        {global.socials.instagram && (
+          <a href={global.socials.instagram} aria-label="Instagram" target="_blank" rel="noreferrer" class="transition hover:text-brand-light">📸</a>
+        )}
+        {global.socials.facebook && (
+          <a href={global.socials.facebook} aria-label="Facebook" target="_blank" rel="noreferrer" class="transition hover:text-brand-light">👍</a>
+        )}
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-white/5 py-4 text-center text-xs text-slate-500">
+    © {new Date().getFullYear()} {global.businessName}. Alle Rechte vorbehalten.
+  </div>
+</footer>

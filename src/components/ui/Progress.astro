@@ -1,0 +1,8 @@
+---
+import ProgressIsland from "@/islands/ui/Progress.client";
+const { value = 0 } = Astro.props as { value?: number };
+---
+<noscript>
+  <progress max="100" value={value} class="h-2 w-full rounded-full"></progress>
+</noscript>
+<ProgressIsland client:visible value={value} />

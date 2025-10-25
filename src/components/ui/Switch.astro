@@ -1,0 +1,19 @@
+---
+import SwitchIsland from "@/islands/ui/Switch.client";
+
+const { name = "switch", checked = false, className = "" } = Astro.props as {
+  name?: string;
+  checked?: boolean;
+  className?: string;
+};
+---
+<noscript>
+  <label class="inline-flex items-center gap-2">
+    <input type="checkbox" name={name} checked={checked} />
+    <span class="text-white/80"><slot /></span>
+  </label>
+</noscript>
+<label class={`inline-flex items-center gap-2 ${className}`}>
+  <SwitchIsland client:visible name={name} defaultChecked={checked} />
+  <span class="text-white/80"><slot /></span>
+</label>

@@ -1,0 +1,31 @@
+---
+import {
+  ResizablePanelGroup,
+  ResizablePanel,
+  ResizableHandle,
+} from "@/islands/ui/Resizable.client";
+const { direction = "horizontal" } = Astro.props as { direction?: "horizontal" | "vertical" };
+---
+<noscript>
+  <div class={`grid gap-3 ${direction === "horizontal" ? "md:grid-cols-2" : ""}`}>
+    <div class="ui-glass rounded-md p-3">
+      <slot name="a" />
+    </div>
+    <div class="ui-glass rounded-md p-3">
+      <slot name="b" />
+    </div>
+  </div>
+</noscript>
+<ResizablePanelGroup client:idle direction={direction}>
+  <ResizablePanel defaultSize={50}>
+    <div class="ui-glass h-full rounded-md p-3">
+      <slot name="a" />
+    </div>
+  </ResizablePanel>
+  <ResizableHandle withHandle />
+  <ResizablePanel defaultSize={50}>
+    <div class="ui-glass h-full rounded-md p-3">
+      <slot name="b" />
+    </div>
+  </ResizablePanel>
+</ResizablePanelGroup>

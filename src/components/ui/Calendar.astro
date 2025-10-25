@@ -1,0 +1,8 @@
+---
+import CalendarIsland from "@/islands/ui/Calendar.client";
+const { selected = "", name = "date" } = Astro.props as { selected?: string; name?: string };
+---
+<!-- SEO/No-JS Fallback -->
+<input type="date" name={name} value={selected} class="rounded-md border border-white/20 bg-transparent px-3 py-2 text-white" />
+<!-- Komfort (Island) -->
+<CalendarIsland client:visible />

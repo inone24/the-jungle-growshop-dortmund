@@ -1,0 +1,40 @@
+---
+import { withBase } from "@/lib/url";
+const base = import.meta.env.BASE_URL;
+interface PageLink {
+  label: string;
+  href?: string;
+  current?: boolean;
+  rel?: "prev" | "next";
+  ellipsis?: boolean;
+}
+const { links = [] } = Astro.props as { links?: PageLink[] };
+const normalized = links.map((link) => ({
+  ...link,
+  href: withBase(link.href, base),
+}));
+---
+<nav class="pagination" role="navigation" aria-label="Pagination">
+  <ul class="pagination-list">
+    {normalized.map((link) => (
+      link.ellipsis ? (
+        <li>
+          <span class="inline-flex h-9 w-9 items-center justify-center text-white/60" aria-hidden="true">
+            …
+          </span>
+        </li>
+      ) : (
+        <li>
+          <a
+            class={`pagination-link ${link.current ? "pagination-link-active" : ""}`}
+            href={link.href ?? "#"}
+            aria-current={link.current ? "page" : undefined}
+            rel={link.rel}
+          >
+            {link.label}
+          </a>
+        </li>
+      )
+    ))}
+  </ul>
+</nav>

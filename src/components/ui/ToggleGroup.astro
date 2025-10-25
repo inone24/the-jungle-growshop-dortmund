@@ -1,0 +1,36 @@
+---
+import { ToggleGroup, ToggleGroupItem } from "@/islands/ui/ToggleGroup.client";
+const { type = "single", items = [], name = "toggle-group" } = Astro.props as {
+  type?: "single" | "multiple";
+  items: { value: string; label: string; pressed?: boolean }[];
+  name?: string;
+};
+const defaultValues = items.filter((item) => item.pressed).map((item) => item.value);
+const groupDefault = type === "single" ? defaultValues[0] ?? undefined : defaultValues;
+---
+<noscript>
+  {type === "single" ? (
+    <fieldset class="inline-flex gap-2">
+      {items.map((item) => (
+        <label class="inline-flex items-center gap-1 text-white/80">
+          <input type="radio" name={name} value={item.value} checked={item.pressed} />
+          <span>{item.label}</span>
+        </label>
+      ))}
+    </fieldset>
+  ) : (
+    <fieldset class="inline-flex gap-2">
+      {items.map((item) => (
+        <label class="inline-flex items-center gap-1 text-white/80">
+          <input type="checkbox" name={`${name}[]`} value={item.value} checked={item.pressed} />
+          <span>{item.label}</span>
+        </label>
+      ))}
+    </fieldset>
+  )}
+</noscript>
+<ToggleGroup client:visible type={type} defaultValue={groupDefault}>
+  {items.map((item) => (
+    <ToggleGroupItem value={item.value}>{item.label}</ToggleGroupItem>
+  ))}
+</ToggleGroup>

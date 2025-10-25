@@ -1,0 +1,81 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SchemaScript from '../components/SchemaScript.astro';
+import type { Breadcrumb, GlobalContent, SeoContent, StructuredData } from '../types';
+import '../styles/tailwind.css';
+import '../styles/ui.css';
+import global from '../../content/global.json';
+
+const { seo, breadcrumbs = [], structuredData = [] } = Astro.props as {
+  seo: SeoContent;
+  breadcrumbs?: Breadcrumb[];
+  structuredData?: StructuredData | StructuredData[];
+};
+
+const globalData = global as GlobalContent;
+const base = import.meta.env.BASE_URL ?? '/';
+
+const canonicalUrl = seo.canonical ?? new URL(Astro.url.pathname, globalData.siteUrl).toString();
+
+const breadcrumbSchema = breadcrumbs.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: breadcrumbs.map((crumb, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: crumb.name,
+        item: new URL(crumb.href, globalData.siteUrl).toString(),
+      })),
+    }
+  : null;
+
+const structured = Array.isArray(structuredData)
+  ? structuredData
+  : structuredData
+    ? [structuredData]
+    : [];
+const pageStructuredData = breadcrumbSchema ? [breadcrumbSchema, ...structured] : structured;
+
+const navItems = [
+  { label: 'Home', href: base },
+  { label: 'Growshop', href: `${base}growshop_dortmund/` },
+  { label: 'Produkte', href: `${base}produkte/` },
+  { label: 'Wissen', href: `${base}wissen/` },
+  { label: 'Standort', href: `${base}standort/` },
+  { label: 'Kontakt', href: `${base}kontakt/` },
+  { label: 'Team', href: `${base}team/` },
+];
+---
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{seo.title}</title>
+    <meta name="description" content={seo.description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:site_name" content={globalData.businessName} />
+    <meta property="og:title" content={seo.title} />
+    <meta property="og:description" content={seo.description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    {seo.ogImage && <meta property="og:image" content={seo.ogImage} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={seo.title} />
+    <meta name="twitter:description" content={seo.description} />
+    {seo.ogImage && <meta name="twitter:image" content={seo.ogImage} />}
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="manifest" href={`${base}manifest.webmanifest`} />
+    <meta name="theme-color" content="#0f3d2e" />
+    <SchemaScript data={pageStructuredData} />
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <Header navItems={navItems} />
+    <main class="flex-1 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+      <slot />
+    </main>
+    <Footer global={globalData} />
+  </body>
+</html>

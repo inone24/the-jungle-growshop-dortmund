@@ -1,0 +1,27 @@
+---
+import ContactFormIsland from "@/islands/ContactForm.client";
+const { action = "/api/contact" } = Astro.props as { action?: string };
+---
+<form id="ssr-contact" method="post" action={action} class="space-y-4">
+  <div>
+    <label class="block text-sm text-white/70 mb-1">Name</label>
+    <input name="name" required class="w-full rounded-lg border border-white/15 bg-black/30 px-3 py-2 text-white"/>
+  </div>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-sm text-white/70 mb-1">E-Mail</label>
+      <input name="email" type="email" required class="w-full rounded-lg border border-white/15 bg-black/30 px-3 py-2 text-white"/>
+    </div>
+    <div>
+      <label class="block text-sm text-white/70 mb-1">Telefon (optional)</label>
+      <input name="phone" class="w-full rounded-lg border border-white/15 bg-black/30 px-3 py-2 text-white"/>
+    </div>
+  </div>
+  <div>
+    <label class="block text-sm text-white/70 mb-1">Nachricht</label>
+    <textarea name="message" rows="5" required class="w-full rounded-lg border border-white/15 bg-black/30 px-3 py-2 text-white"></textarea>
+  </div>
+  <button class="rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-white hover:bg-white/10">Senden</button>
+</form>
+
+<ContactFormIsland client:idle action={action}/>

@@ -1,0 +1,16 @@
+---
+const { name = "message", rows = 5, placeholder = "", value = "", required = false } = Astro.props as {
+  name?: string;
+  rows?: number;
+  placeholder?: string;
+  value?: string;
+  required?: boolean;
+};
+---
+<textarea
+  name={name}
+  rows={rows}
+  placeholder={placeholder}
+  class="ui-textarea"
+  required={required}
+>{value}</textarea>

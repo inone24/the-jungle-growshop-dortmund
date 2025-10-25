@@ -1,0 +1,9 @@
+---
+const { forId = "", className = "" } = Astro.props as {
+  forId?: string;
+  className?: string;
+};
+---
+<label for={forId} class={`text-sm font-medium leading-none text-white ${className}`}>
+  <slot />
+</label>
