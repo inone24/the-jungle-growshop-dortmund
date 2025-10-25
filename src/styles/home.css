@@ -1,0 +1,119 @@
+/* Jungle Minimalistic Glow – Home/Growshop Effekte */
+:root {
+  --glass-bg: rgba(17, 24, 39, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glow-primary: 0 25px 60px -30px rgba(58, 95, 11, 0.65);
+  --glow-alt: 0 35px 80px -20px rgba(148, 193, 30, 0.55);
+}
+
+@keyframes particle-float {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px);
+  }
+  50% {
+    transform: translateY(-5px) translateX(-5px);
+  }
+  75% {
+    transform: translateY(-15px) translateX(3px);
+  }
+}
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(58, 95, 11, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(58, 95, 11, 0.6);
+  }
+}
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+@keyframes text-glow-alt {
+  0%,
+  100% {
+    text-shadow: 0 0 10px rgba(74, 103, 65, 0.5), 0 0 20px rgba(74, 103, 65, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(74, 103, 65, 0.8), 0 0 40px rgba(74, 103, 65, 0.5);
+  }
+}
+@keyframes flow-wave {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Utilities */
+.animate-particle-float {
+  animation: particle-float 6s ease-in-out infinite;
+}
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+.animate-text-glow-alt {
+  animation: text-glow-alt 3s ease-in-out infinite;
+}
+.animate-flow-wave {
+  background-size: 200% 200%;
+  animation: flow-wave 15s ease infinite;
+}
+
+.bg-hero-glow {
+  background: radial-gradient(circle at 50% 80%, rgba(58, 95, 11, 0.15), transparent 70%);
+}
+.bg-hero-gradient {
+  background-image: radial-gradient(circle at top, rgba(15, 169, 88, 0.25), rgba(10, 10, 10, 0.85));
+}
+.scanline-effect {
+  position: relative;
+  overflow: hidden;
+}
+.scanline-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(58, 95, 11, 0.5), transparent);
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+}
+.grid-pattern {
+  background-image: linear-gradient(rgba(58, 95, 11, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(58, 95, 11, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Glass Panel baseline */
+.glass-panel {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(24px);
+  box-shadow: var(--glow-primary);
+}
+
+.focus-ring {
+  position: relative;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid #6bbf59;
+  outline-offset: 3px;
+}

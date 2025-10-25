@@ -1,0 +1,532 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Lightbox from '../components/Lightbox.astro';
+import type { GlobalContent, StructuredData } from '../types';
+import '../styles/home.css';
+import seo from '../../content/seo/growshop.json';
+import global from '../../content/global.json';
+
+const globalData = global as GlobalContent;
+const phoneHref = `tel:${globalData.contact.phone.replace(/\s+/g, '')}`;
+const addressLine = `${globalData.address.street}, ${globalData.address.postalCode} ${globalData.address.city}`;
+
+const breadcrumbs = [
+  { name: 'Startseite', href: '/' },
+  { name: 'Growshop Dortmund', href: '/growshop_dortmund/' },
+];
+
+const kpis = [
+  { value: '700 m²', label: 'Show & Lager' },
+  { value: '5.000+', label: 'Artikel verfügbar' },
+  { value: '10', label: 'Testgeräte vor Ort' },
+  { value: '12+ Jahre', label: 'Praxis-Erfahrung' },
+];
+
+const heroImages = [
+  {
+    url: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68f616cbdcf8d5910084b04d/32ee6242f_The_Jungle_Growshop_Dortmund_Ladendurchsicht.jpg',
+    alt: 'The Jungle Growshop Dortmund Ladenübersicht von vorne',
+    title: '700 m² Show & Lager',
+  },
+  {
+    url: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68f616cbdcf8d5910084b04d/73b4d8410_The_Jungle_Growshop_Growbox_2.jpg',
+    alt: 'Growzelt mit Lüftungssystem Demonstration',
+    title: 'Live-Demos & Setups',
+  },
+  {
+    url: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68f616cbdcf8d5910084b04d/4d513a588_The_Jungle_Growshop_Growbox_1.jpg',
+    alt: 'Komplettes Growzelt Setup mit Produkten',
+    title: 'Alles zum Anfassen',
+  },
+];
+
+const categories = [
+  {
+    title: 'Grow-Komplettsets',
+    description:
+      'Von 60×60 bis 150×150 cm – mit Zelten, LED, AKF, EC-Lüftern und Controllern dimensioniert und sofort startklar.',
+    href: '/produkte/',
+  },
+  {
+    title: 'LED-Grow-Lampen',
+    description:
+      'Bar-Style, Vollspektrum, dimmbar. 100–650 W mit PPFD-Charts, Spektren und Vergleichsmessungen im Store.',
+    href: '/produkte/',
+  },
+  {
+    title: 'Growboxen & Zelte',
+    description: 'Secret Jardin, Mammoth, Homebox – stabil, lichtdicht und mit cleveren Details für jede Fläche.',
+    href: '/produkte/',
+  },
+  {
+    title: 'Lüftung & Aktivkohlefilter',
+    description: 'EC-Lüfter, AKF, Schalldämpfer, Controller – leise, effizient und skalierbar für Mehrzelt-Setups.',
+    href: '/produkte/',
+  },
+  {
+    title: 'Dünger & Additive',
+    description: 'Bio & Mineral – CANNA, Plagron, Advanced Nutrients, Athena. Passende Feeding-Pläne inklusive.',
+    href: '/produkte/',
+  },
+  {
+    title: 'Substrate & Töpfe',
+    description: 'Living Soil, Coco, Hydro-Substrate, Fabric- & Air-Pots – mit passenden Bewässerungskonzepten.',
+    href: '/produkte/',
+  },
+];
+
+const smartSystems = [
+  {
+    name: 'AC Infinity · UIS Ecosystem',
+    features: [
+      'Controller 69 Pro/Pro+ mit WiFi & Bluetooth',
+      'Dynamische VPD-Programme je Phase',
+      'Charts, Logs & CSV-Export',
+      'Bis zu 16 Geräte (Multi-Zelt)',
+    ],
+    benefits:
+      'Für Ambitionierte/Profis: maximale Kontrolle & Reproduzierbarkeit, intuitive App und detaillierte Daten.',
+  },
+  {
+    name: 'VIVOSUN · GrowHub System',
+    features: [
+      'All-in-One Hub für Licht, Klima & Bewässerung',
+      'Vorkonfigurierte Automationen & Rezepte',
+      'Grow-Diary mit Foto-Timeline',
+      'Schnelles Onboarding',
+    ],
+    benefits:
+      'Für Einsteiger:innen & Fortgeschrittene: einfache Bedienung, skalierbar und mit smarten Automationen.',
+  },
+];
+
+const setupSteps = [
+  ['Ziel & Fläche definieren', 'Raumgröße, Energie, Wunsch-Ertrag – wir klären Zielsetzung und passende Zeltgröße.'],
+  ['Präzise Dimensionierung', 'LED-Watt, AKF-Durchsatz, EC-Lüfter & Controller – keine Engpässe, kein Overkill.'],
+  ['Controller & Sensorik wählen', 'Vom Basis-Thermostat bis zur VPD-geführten Pro-Steuerung – passend zu Budget & Setup.'],
+  ['App-Pairing & Kalibrierung', 'Controller koppeln, Sensoren platzieren, Basiswerte definieren – Start ready.'],
+  ['Baseline & Feintuning', 'PPFD messen, VPD-Ziele setzen, Lüfterkurven glätten – stabil im grünen Bereich.'],
+  ['Daten nutzen & optimieren', 'Charts lesen, Trends erkennen, Runs reproduzierbar machen – Level-Up.'],
+];
+
+const services = [
+  ['Quick-Check am Tresen', 'Zeltmaße/Fotos mitbringen – wir lesen Setups und geben Sofortdiagnosen.'],
+  ['Komplett-Set-Planung', 'Zelt, LED, AKF, Controller, Substrate & Dünger – maßgeschneiderte Einkaufslisten.'],
+  ['Troubleshooting', 'Geruch, Hitze, Feuchte, pH/EC, Lockout – wir finden Ursachen und liefern Lösungen.'],
+  ['Ersatzteile & Kleinkram', 'Kabel, Schellen, Netze, Dämpfer, Tropfer, Adapter – direkt verfügbar.'],
+];
+
+const faqs = [
+  [
+    'Welches Komplettset für 100×100 cm?',
+    'Für 100×100×200 cm empfehlen wir 240–320 W LED (Bar), EC-Lüfter mit 150 m³/h oversized, passenden AKF, Klimacontroller und Starter-Dünger. Wir dimensionieren das Setup live im Laden und du nimmst alles direkt mit.',
+  ],
+  [
+    'Wie laut ist ein EC-Lüfter?',
+    'Richtig dimensioniert und gedrosselt läuft er oft unter 25 dB. Größerer AKF = niedrigere Drehzahl = leiser. Schalldämpfer vor/nach dem Lüfter reduziert zusätzlich.',
+  ],
+  [
+    'Was ist VPD & warum wichtig?',
+    'VPD steuert die Transpiration. Zu niedrig → wenig Aufnahme, zu hoch → Stress. Mit VPD-Profilen (AC Infinity, TrolMaster, GrowHub) erreichst du reproduzierbare Runs.',
+  ],
+  [
+    'Habt ihr Testgeräte vor Ort?',
+    'Ja – LED-Panels, EC-Lüfter, AKFs, Controller, pH/EC-Meter u. v. m. Hören, anfassen, vergleichen – keine Überraschungen nach dem Kauf.',
+  ],
+  [
+    'Welche Dünger-Linie für Einsteiger:innen?',
+    'BioBizz (organisch, verzeihend) oder Plagron/CANNA (mineralisch, präzise & schnell). Wir geben konkrete Startwerte und Feeding-Charts mit.',
+  ],
+];
+
+const localBusiness: StructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: globalData.businessName,
+  legalName: globalData.legalName,
+  description: seo.description,
+  url: `${globalData.siteUrl}growshop_dortmund/`,
+  telephone: globalData.contact.phone,
+  email: globalData.contact.email,
+  image: `${globalData.siteUrl}favicon.svg`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: globalData.address.street,
+    postalCode: globalData.address.postalCode,
+    addressLocality: globalData.address.city,
+    addressCountry: globalData.address.country,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: globalData.geo.latitude,
+    longitude: globalData.geo.longitude,
+  },
+  openingHoursSpecification: globalData.openingHours.map((entry) => ({
+    '@type': 'OpeningHoursSpecification',
+    description: entry,
+  })),
+  paymentAccepted: globalData.paymentMethods.join(', '),
+};
+
+const offerCatalog: StructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'OfferCatalog',
+  name: 'Sortiment The Jungle Growshop Dortmund',
+  itemListElement: categories.map((item) => ({
+    '@type': 'Offer',
+    itemOffered: {
+      '@type': 'Product',
+      name: item.title,
+      description: item.description,
+      url: new URL(item.href, globalData.siteUrl).toString(),
+    },
+  })),
+};
+
+const faqPage: StructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(([question, answer]) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: answer,
+    },
+  })),
+};
+---
+<BaseLayout seo={seo} breadcrumbs={breadcrumbs} structuredData={[localBusiness, offerCatalog, faqPage]}>
+  <section id="hero" class="relative bg-gradient-to-br from-gray-900 via-black to-black text-white py-24 overflow-hidden border-b border-white/10">
+    <div class="absolute inset-0 opacity-20 bg-hero-glow" aria-hidden="true"></div>
+    <div class="mx-auto max-w-6xl px-6 relative">
+      <div class="text-center space-y-6">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-[#3A5F0B]/20 border border-[#3A5F0B]/30 rounded-full backdrop-blur-sm">
+          <span class="text-sm font-medium text-white/80">Dein Growshop in Dortmund</span>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-bold leading-tight">
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-[#4A6741]">Growshop Dortmund – </span>
+          <br />ehrlich beraten, sofort verfügbar
+        </h1>
+        <p class="text-xl md:text-2xl text-white/80 max-w-4xl mx-auto leading-relaxed">
+          Zelte, LED-Bar-Systeme, EC-Lüfter mit AKF, Dünger &amp; Substrate – plus Smart-Steuerung. Wir dimensionieren Leistung,
+          Luftwechsel &amp; VPD mit dir am Tresen.
+        </p>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8">
+          {kpis.map((item) => (
+            <article class="glass-panel rounded-2xl p-6 text-center hover:shadow-[var(--glow-alt)] transition">
+              <div class="text-3xl font-bold text-white mb-1">{item.value}</div>
+              <div class="text-sm text-white/70">{item.label}</div>
+            </article>
+          ))}
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-4 pt-6">
+          <a href="/kontakt/" class="focus-ring rounded-full bg-white text-black font-semibold px-8 py-3 hover:bg-white/90">Beratung &amp; Kauf</a>
+          <a href="/standort/" class="focus-ring rounded-full border border-white/20 bg-white/5 hover:bg-white/10 px-8 py-3">Route starten</a>
+          <a href={phoneHref} class="focus-ring rounded-full border border-white/20 bg-white/5 hover:bg-white/10 px-8 py-3">Jetzt anrufen</a>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 mt-12">
+          {heroImages.map((image) => (
+            <a
+              href={image.url}
+              data-lightbox-src={image.url}
+              data-lightbox-alt={image.alt}
+              data-lightbox-title={image.title}
+              class="group relative glass-panel border-white/10 rounded-2xl aspect-video overflow-hidden hover:border-[#3A5F0B]/50 hover:scale-[1.02] transition"
+            >
+              <img src={image.url} alt={image.alt} class="w-full h-full object-cover group-hover:scale-110 transition" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end justify-center p-4">
+                <span class="text-white text-sm font-semibold">{image.title}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sortiment" class="py-20 grid-pattern">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="text-center mb-10">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-3">Unser Sortiment</h2>
+        <p class="text-white/80 max-w-3xl mx-auto">Alles für dein Indoor-Setup – sorgfältig kuratiert &amp; sofort verfügbar.</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {categories.map((item) => (
+          <a href={item.href} class="group relative">
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-[#3A5F0B]/30 to-transparent rounded-2xl blur opacity-0 group-hover:opacity-100 transition"></div>
+            <article class="relative glass-panel rounded-2xl p-6 hover:shadow-[var(--glow-alt)] transition h-full">
+              <h3 class="text-xl text-white mb-2">{item.title}</h3>
+              <p class="text-white/70">{item.description}</p>
+              <div class="mt-4 text-[#4A6741] text-sm font-semibold opacity-0 group-hover:opacity-100 transition">Mehr erfahren →</div>
+            </article>
+          </a>
+        ))}
+      </div>
+      <div class="text-center mt-10">
+        <a href="/produkte/" class="focus-ring rounded-full bg-white/10 border border-white/20 hover:bg-white/20 px-6 py-2 text-white">Alle Kategorien ansehen</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="smart" class="py-20 bg-black scanline-effect">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="text-center mb-10">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-3">Smart-Systeme Spotlight</h2>
+        <p class="text-white/80 max-w-3xl mx-auto">Automationen, Daten, Reproduzierbarkeit – live im Laden vergleichen.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        {smartSystems.map((system) => (
+          <article class="group relative">
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-[#3A5F0B]/20 to-transparent rounded-2xl blur opacity-0 group-hover:opacity-100 transition"></div>
+            <div class="relative glass-panel rounded-2xl p-6 hover:border-[#3A5F0B]/50 transition">
+              <h3 class="text-2xl text-white mb-2">{system.name}</h3>
+              <ul class="space-y-2 mb-4">
+                {system.features.map((feature) => (
+                  <li class="text-white/90">• {feature}</li>
+                ))}
+              </ul>
+              <p class="text-white/80">
+                <strong class="text-white">Fazit:</strong> {system.benefits}
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <details class="mt-8 glass-panel rounded-2xl p-6">
+        <summary class="cursor-pointer text-white font-semibold">Systeme im Detail vergleichen</summary>
+        <div class="overflow-x-auto mt-4">
+          <table class="w-full text-left">
+            <thead>
+              <tr class="border-b border-white/10">
+                <th class="py-3 pr-4 text-white/70">Feature</th>
+                <th class="py-3 pr-4 text-white">AC Infinity UIS</th>
+                <th class="py-3 text-white">VIVOSUN GrowHub</th>
+              </tr>
+            </thead>
+            <tbody class="text-white/80">
+              <tr class="border-b border-white/5">
+                <td class="py-3 pr-4">App-Control</td>
+                <td class="py-3 pr-4 bg-[#3A5F0B]/10">WiFi + Bluetooth</td>
+                <td class="py-3">WiFi</td>
+              </tr>
+              <tr class="border-b border-white/5">
+                <td class="py-3 pr-4">VPD-Steuerung</td>
+                <td class="py-3 pr-4 bg-[#3A5F0B]/10">Ja, dynamisch</td>
+                <td class="py-3">Indirekt via Automationen</td>
+              </tr>
+              <tr class="border-b border-white/5">
+                <td class="py-3 pr-4">Daten-Logging</td>
+                <td class="py-3 pr-4 bg-[#3A5F0B]/10">Charts + CSV-Export</td>
+                <td class="py-3">Diary mit Fotos</td>
+              </tr>
+              <tr class="border-b border-white/5">
+                <td class="py-3 pr-4">Max. Geräte</td>
+                <td class="py-3 pr-4 bg-[#3A5F0B]/10">bis 16</td>
+                <td class="py-3">systemabhängig</td>
+              </tr>
+              <tr>
+                <td class="py-3 pr-4">Zielgruppe / Preis</td>
+                <td class="py-3 pr-4">Ambitioniert/Pro · €€€</td>
+                <td class="py-3">Einsteiger/Advanced · €€</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section id="steps" class="py-20 bg-gradient-to-b from-black to-gray-950">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="text-center mb-10">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-3">Dein Setup in 6 Schritten</h2>
+        <p class="text-white/80">Von der ersten Idee bis zum perfekt getunten System.</p>
+      </div>
+      <div class="relative space-y-6">
+        <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#3A5F0B] via-[#4A6741] to-[#3A5F0B]" aria-hidden="true"></div>
+        {setupSteps.map(([title, copy], index) => (
+          <article class="relative pl-20">
+            <div class="absolute left-0 top-0 w-16 h-16 bg-black border-4 border-[#3A5F0B] rounded-full flex items-center justify-center text-white font-bold">
+              {index + 1}
+            </div>
+            <div class="glass-panel rounded-2xl p-6 hover:border-[#3A5F0B]/50 transition">
+              <h3 class="text-xl text-white mb-1">{title}</h3>
+              <p class="text-white/80">{copy}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="beratung" class="py-20 bg-black">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="text-center mb-10">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-3">Lokale Beratung</h2>
+        <p class="text-white/80 max-w-3xl mx-auto">Hands-on, ehrlich, sofort verfügbar – genau für dein Setup.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        {services.map(([title, copy]) => (
+          <article class="group relative">
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-[#3A5F0B]/20 to-transparent rounded-2xl blur opacity-0 group-hover:opacity-100 transition"></div>
+            <div class="glass-panel rounded-2xl p-6 hover:border-[#3A5F0B]/50 transition h-full">
+              <h3 class="text-xl text-white mb-2 flex items-center justify-between">
+                {title}
+                <span class="text-[#4A6741] opacity-0 group-hover:opacity-100 transition">→</span>
+              </h3>
+              <p class="text-white/80">{copy}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <div class="text-center mt-10">
+        <a href="/kontakt/" class="focus-ring rounded-full bg-white text-black font-semibold px-8 py-3 hover:bg-white/90">Beratungstermin vereinbaren</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="anfahrt" class="py-20 bg-gradient-to-b from-black to-gray-950">
+    <div class="mx-auto max-w-5xl px-6">
+      <div class="text-center mb-10">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-3">Anfahrt &amp; Öffnungszeiten</h2>
+        <p class="text-white/80">Zentral, gut erreichbar – ÖPNV, Auto, zu Fuß.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 mb-8">
+        <div class="glass-panel rounded-2xl p-6 space-y-4">
+          <div class="p-4 bg-white/5 rounded-xl">
+            <p class="font-semibold text-white mb-1">Adresse</p>
+            <p class="text-white/80">{addressLine}</p>
+          </div>
+          <div class="p-4 bg-white/5 rounded-xl">
+            <p class="font-semibold text-white mb-1">Öffnungszeiten</p>
+            <ul class="space-y-1 text-white/80">
+              {globalData.openingHours.map((slot) => (
+                <li>{slot}</li>
+              ))}
+            </ul>
+          </div>
+          <div class="p-4 bg-white/5 rounded-xl">
+            <p class="font-semibold text-white mb-1">Telefon</p>
+            <a href={phoneHref} class="text-white hover:text-[#4A6741]">{globalData.contact.phone}</a>
+          </div>
+          <div class="p-4 bg-white/5 rounded-xl">
+            <p class="font-semibold text-white mb-1">E-Mail</p>
+            <a href={`mailto:${globalData.contact.email}`} class="text-white hover:text-[#4A6741]">{globalData.contact.email}</a>
+          </div>
+        </div>
+        <div class="glass-panel rounded-2xl p-6 space-y-4">
+          <div class="p-4 bg-white/5 rounded-xl">
+            <p class="font-semibold text-white mb-1">ÖPNV (VRR/DSW21)</p>
+            <ul class="space-y-1 text-white/80">
+              {globalData.publicTransport.map((line) => (
+                <li>{line}</li>
+              ))}
+            </ul>
+          </div>
+          <div class="p-4 bg-white/5 rounded-xl">
+            <p class="font-semibold text-white mb-1">PKW &amp; Parken</p>
+            <p class="text-white/80">Parkhaus „Klinikzentrum Nord“ in direkter Nähe.</p>
+          </div>
+          <div class="flex gap-3 mt-6">
+            <a class="focus-ring rounded-lg bg-white text-black px-4 py-2" href="https://www.google.com/maps/dir/?api=1&destination=Mallinckrodtstra%C3%9Fe+212,+44147+Dortmund" target="_blank" rel="noopener noreferrer">
+              Route starten
+            </a>
+            <a class="focus-ring rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-white hover:bg-white/10" href="/standort/">
+              Standortdetails
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="glass-panel rounded-2xl p-2">
+        <iframe
+          src="https://maps.google.com/maps?q=Mallinckrodtstra%C3%9Fe+212,+44147+Dortmund&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          class="w-full h-96 rounded-xl"
+          style="border:0"
+          loading="lazy"
+          title="Karte The Jungle Growshop Dortmund"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section id="team" class="py-20 bg-black">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="text-center mb-10">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-3">Team &amp; Credo</h2>
+        <p class="text-white/80">Echte Indoor-Grower:innen mit Praxis-Know-how.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <article class="glass-panel rounded-2xl p-6">
+          <h3 class="text-xl text-white mb-2">Marvin</h3>
+          <p class="text-white/80">Store Lead &amp; Setup-Architekt – „Oversized AKF + niedrige Drehzahl = leise &amp; effizient.“</p>
+        </article>
+        <article class="glass-panel rounded-2xl p-6">
+          <h3 class="text-xl text-white mb-2">Lukas</h3>
+          <p class="text-white/80">LED &amp; PPFD – „Canopy-PPFD zählt, nicht die Verpackung. Wir messen live.“</p>
+        </article>
+        <article class="glass-panel rounded-2xl p-6">
+          <h3 class="text-xl text-white mb-2">Sarah</h3>
+          <p class="text-white/80">Klima &amp; VPD – „Stabile Transpiration ist der Game-Changer.“</p>
+        </article>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 mt-8">
+        <h3 class="text-2xl text-white mb-3">Unser Credo</h3>
+        <p class="text-white/80">
+          Wir dimensionieren PPFD passend zu Zelt &amp; VPD, fahren EC-Lüfter oversized und gedrosselt, setzen auf dokumentierte Workflows statt Mythen. Keine Sales-Tricks – ehrliche Beratung. Keine Wartezeiten – alles sofort zum Mitnehmen.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="py-20 bg-gradient-to-b from-black to-gray-950">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="text-center mb-10">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-3">FAQ</h2>
+        <p class="text-white/80">Häufige Fragen rund um den Growshop &amp; Indoor-Growing.</p>
+      </div>
+      <div class="space-y-4">
+        {faqs.map(([question, answer]) => (
+          <details class="glass-panel rounded-xl p-4">
+            <summary class="cursor-pointer text-white font-semibold">{question}</summary>
+            <div class="pt-2 text-white/80">{answer}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden border-t border-white/10">
+    <div class="absolute inset-0 opacity-30 scanline-effect" aria-hidden="true"></div>
+    <div class="absolute inset-0 bg-hero-glow" aria-hidden="true"></div>
+    <div class="mx-auto max-w-5xl px-6 relative">
+      <div class="text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-[#3A5F0B]/20 border border-[#3A5F0B]/30 rounded-full backdrop-blur-sm mb-6">
+          <span class="text-sm font-medium text-[#4A6741]">The Jungle Growshop Dortmund</span>
+        </div>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+          Einmal sauber planen – <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-[#4A6741]">entspannt ernten</span>
+        </h2>
+        <p class="text-xl text-white/80 mb-8 max-w-3xl mx-auto">
+          Wir dimensionieren dein Setup (Zelt, LED, Lüftung/AKF, Controller) und richten Profile &amp; Automationen ein. Alles sofort verfügbar.
+        </p>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <a href="/kontakt/" class="focus-ring rounded-lg bg-white px-8 py-3 text-black font-semibold hover:bg-white/90">Beratung &amp; Kauf sichern</a>
+          <a href="/standort/" class="focus-ring rounded-lg border border-white/20 bg-white/5 px-8 py-3 hover:bg-white/10 text-white">Route planen</a>
+        </div>
+        <div class="mt-10 glass-panel rounded-2xl p-6 text-left inline-block">
+          <address class="not-italic text-white/90">
+            <strong class="text-white">The Jungle Growshop Dortmund</strong><br />
+            {addressLine} · {globalData.contact.phone}
+          </address>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Lightbox />
+</BaseLayout>
