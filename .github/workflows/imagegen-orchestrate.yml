@@ -1,0 +1,68 @@
+name: Use ImageGen (orchestrate)
+
+on:
+  # manueller Start aus dem Actions-Tab
+  # (Codex/CI kann via workflow_dispatch + REST triggern)
+  # Achtung: dieses Repo braucht das Secret OPENAI_API_KEY
+  workflow_dispatch:
+    inputs:
+      page:
+        description: "Page route (z. B. /produkte/led-lampen)"
+        required: true
+        type: string
+      container:
+        description: "Container wählen"
+        required: true
+        default: "hero"
+        type: choice
+        options: [ "hero", "slider", "product" ]
+      brand:
+        description: "Brand mood"
+        required: false
+        default: "GrowCologne"
+        type: string
+      keywords:
+        description: "CSV-Keywords"
+        required: false
+        type: string
+      desc:
+        description: "Kurze Beschreibung / Kontext"
+        required: false
+        type: string
+      preset:
+        description: "Preset"
+        required: false
+        default: "hero_photoreal"
+        type: choice
+        options: [ "hero_photoreal", "slider_emotion", "product_studio", "product_transparent" ]
+      branch:
+        description: "Ziel-Branch für PR (optional)"
+        required: false
+        type: string
+      public_dir:
+        description: "Web-Root-Ordner"
+        required: false
+        default: "public"
+        type: string
+      content_dir:
+        description: "Content-Ordner"
+        required: false
+        default: "content"
+        type: string
+
+jobs:
+  run-imagegen:
+    # ⬇️ Dein Tool-Repo (muss öffentlich sein oder dieses Repo braucht Leserechte)
+    uses: inone24/imagegen/.github/workflows/orchestrate.yml@main
+    with:
+      page:       ${{ github.event.inputs.page }}
+      container:  ${{ github.event.inputs.container }}
+      brand:      ${{ github.event.inputs.brand }}
+      keywords:   ${{ github.event.inputs.keywords }}
+      desc:       ${{ github.event.inputs.desc }}
+      preset:     ${{ github.event.inputs.preset }}
+      branch:     ${{ github.event.inputs.branch }}
+      public_dir: ${{ github.event.inputs.public_dir }}   # Astro-Default: public
+      content_dir:${{ github.event.inputs.content_dir }}  # Astro-Default: content
+    secrets:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
