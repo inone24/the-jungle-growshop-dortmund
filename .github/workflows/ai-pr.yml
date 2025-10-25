@@ -1,0 +1,147 @@
+name: AI PR
+
+on:
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      prompt:
+        description: "Task für den AI-Agenten"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate-pr:
+    # Bedingung: manueller Start ODER ein neuer Kommentar in einem PR mit '/ai'
+    if: github.event_name == 'workflow_dispatch' || (github.event.issue.pull_request != null && startsWith(github.event.comment.body, '/ai'))
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps for local script
+        run: |
+          mkdir -p .github/ai
+          cat > .github/ai/package.json <<'PKG'
+          {
+            "name": "ai-pr",
+            "type": "module",
+            "dependencies": {
+              "openai": "^4.0.0",
+              "glob": "^11.0.0"
+            }
+          }
+          PKG
+          npm --prefix .github/ai i
+
+      - name: Run agent
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_PROJECT: ${{ secrets.OPENAI_PROJECT }}
+          OPENAI_VECTOR_STORE_ID: ${{ secrets.OPENAI_VECTOR_STORE_ID }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+        run: |
+          if [ -z "$OPENAI_VECTOR_STORE_ID" ]; then
+            echo "Missing OPENAI_VECTOR_STORE_ID secret."; exit 1;
+          fi
+
+          cat > .github/ai/generate-pr.mjs <<'JS'
+          import fs from "fs";
+          import path from "path";
+          import { glob } from "glob";
+          import OpenAI from "openai";
+
+          const client = new OpenAI({
+            apiKey: process.env.OPENAI_API_KEY,
+            project: process.env.OPENAI_PROJECT || undefined
+          });
+
+          // 1) Prompt bestimmen
+          const event = JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, "utf8"));
+          let userPrompt = "";
+          if (process.env.GITHUB_EVENT_NAME === "workflow_dispatch") {
+            userPrompt = "${{ github.event.inputs.prompt || '' }}";
+          } else {
+            userPrompt = (event.comment && event.comment.body) || "";
+            userPrompt = userPrompt.replace(/^\/ai\s*/i, "");
+          }
+          if (!userPrompt.trim()) {
+            console.log("No prompt found. Exiting.");
+            process.exit(0);
+          }
+
+          // 2) Kleine Fallback-Snippets (nicht Hauptkontext, aber hilfreich)
+          const files = (await glob("**/*", {
+            ignore: ["node_modules/**", ".git/**", ".github/**", "dist/**", "build/**", ".astro/**"],
+            nodir: true
+          })).slice(0, 100);
+          const readFileSafe = p => { try { return fs.readFileSync(p, "utf8"); } catch { return ""; } };
+          const snippets = files.slice(0, 20).map(p => `FILE: ${p}\n---\n${readFileSafe(p).slice(0, 8000)}`).join("\n\n");
+
+          // 3) Systemprompt → JSON-Änderungsplan (keine Diffs; vollständige Datei-Inhalte)
+          const sys = `Du bist ein Software-Architekt & -Entwickler (Astro, TypeScript, pnpm).
+          Du kennst Astro-Routing, Content Collections, Komponenten und Build.
+          Antworte NUR mit JSON:
+          {
+            "summary": "...",
+            "changes": [
+              { "path": "relativer/pfad", "mode": "overwrite", "content": "GESAMTER NEUER DATEI-INHALT" }
+            ]
+          }`;
+
+          // 4) OpenAI mit File Search + Vector Store
+          const resp = await client.responses.create({
+            model: "gpt-5.1",
+            tools: [{ type: "file_search" }],
+            attachments: [{ vector_store_id: process.env.OPENAI_VECTOR_STORE_ID }],
+            input: [
+              { role: "system", content: sys },
+              { role: "user", content: `Aufgabe:\n${userPrompt}\n\nNutze File-Search für vollständigen Repo-Kontext. Fallback-Snippets:\n${snippets}` }
+            ]
+          });
+
+          const text = resp.output_text || "";
+          let plan;
+          try { plan = JSON.parse(text); } catch (e) {
+            console.error("Model output was not valid JSON:", text.slice(0, 1000));
+            process.exit(1);
+          }
+
+          // 5) Änderungen in den Arbeitsbaum schreiben
+          for (const ch of (plan.changes || [])) {
+            const targetPath = path.normalize(ch.path);
+            fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+            fs.writeFileSync(targetPath, ch.content, "utf8");
+            console.log("Wrote:", targetPath);
+          }
+
+          // 6) Zusammenfassung für PR-Body
+          fs.mkdirSync(".ai", { recursive: true });
+          fs.writeFileSync(".ai/summary.md", plan.summary || "AI changes", "utf8");
+          JS
+
+          node .github/ai/generate-pr.mjs
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "AI: proposed changes"
+          title: "AI: Proposed changes"
+          body: |
+            Changes proposed by AI workflow.
+
+            ## Summary
+            $(cat .ai/summary.md 2>/dev/null || echo "No summary.")
+          branch: ai/update-${{ github.run_id }}
+          delete-branch: true
